@@ -45,17 +45,17 @@
                                     <th scope="col">Batch Name</th>
                                     <th scope="col">Starting Date</th>
                                     <th scope="col">Ending Date</th>
-                                    <th scope="col">Tag</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody >
                                 <tr class="text-center">
                                     <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Otto</td>
-                                    <td><span class="badge badge-success">Primary</span></td>
+                                    <td>2080</td>
+                                    <td>2080-04-01</td>
+                                    <td>2080-05-32</td>
+                                    <td><span class="badge badge-success">Running</span></td>
                                     <td>
                                         <a href="" class="btn btn-primary">Edit</a>
                                         <a href="" class="btn btn-danger">Delete</a>
@@ -70,7 +70,7 @@
                   <!-- Responsive tables Start -->
                   <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
-                            <h4 class="text-blue text-center">Course</h4>
+                            <h4 class="text-blue text-center">Course/Program</h4>
                     </div>
                     <span class="btn btn-primary mb-4 align-middle">Add Course</span>
                     <div class="table-responsive">
@@ -78,20 +78,20 @@
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">S.N</th>
-                                    <th scope="col">Batch Name</th>
-                                    <th scope="col">Starting Date</th>
-                                    <th scope="col">Ending Date</th>
-                                    <th scope="col">Tag</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Faculty</th>
+                                    <th scope="col">University</th>
+                                    <th scope="col">Type</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody >
                                 <tr class="text-center">
                                     <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Otto</td>
-                                    <td><span class="badge badge-success">Primary</span></td>
+                                    <td>Bachelor of Computer Application</td>
+                                    <td>Humanity</td>
+                                    <td>Tribhuvan University</td>
+                                    <td><span class="badge badge-success">Semester</span></td>
                                     <td>
                                         <a href="" class="btn btn-primary">Edit</a>
                                         <a href="" class="btn btn-danger">Delete</a>
@@ -106,17 +106,20 @@
                   <!-- Responsive tables Start -->
                   <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
-                            <h4 class="text-blue h4 text-center">Semester</h4>
+                            <h4 class="text-blue h4 text-center">Type</h4>
                     </div>
                     <span class="btn btn-primary mb-4 align-middle">Add Semester</span>
+                    <span class="btn btn-primary mb-4 align-middle">View Semester</span>
+                    <span class="btn btn-primary mb-4 align-middle">View Year</span>
+                    {{-- Semester year view start --}}
+
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">S.N</th>
-                                    <th scope="col">Batch Name</th>
-                                    <th scope="col">Starting Date</th>
-                                    <th scope="col">Ending Date</th>
+                                    <th scope="col">Semester</th>
+                                    <th scope="col">Code</th>
                                     <th scope="col">Tag</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -124,10 +127,9 @@
                             <tbody >
                                 <tr class="text-center">
                                     <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>Otto</td>
-                                    <td><span class="badge badge-success">Primary</span></td>
+                                    <td>First Semester</td>
+                                    <td>00245</td>
+                                    <td><span class="badge badge-success">Active</span></td>
                                     <td>
                                         <a href="" class="btn btn-primary">Edit</a>
                                         <a href="" class="btn btn-danger">Delete</a>
@@ -136,6 +138,37 @@
                             </tbody>
                         </table>
                     </div>
+
+                     {{-- Semester year view start --}}
+                       {{-- Semester year view start --}}
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">S.N</th>
+                                    <th scope="col">Year</th>
+                                    <th scope="col">Code</th>
+                                    <th scope="col">Tag</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody >
+                                <tr class="text-center">
+                                    <th scope="row">1</th>
+                                    <td>First Year</td>
+                                    <td>00245</td>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                    <td>
+                                        <a href="" class="btn btn-primary">Edit</a>
+                                        <a href="" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                     {{-- Semester year view start --}}
                 </div>
                 <!-- Responsive tables End -->
 
