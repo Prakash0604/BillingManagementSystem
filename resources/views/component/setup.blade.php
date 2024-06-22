@@ -1,7 +1,6 @@
 @extends('index')
 @section('content')
     <div class="container">
-        <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
                 <div class="page-header">
                     <div class="row">
@@ -31,12 +30,18 @@
                         </div>
                     </div>
                 </div>
-             <!-- Responsive tables Batch  Start -->
+
+
+                {{-- Batch Modue Start --}}
+
+                {{-- Batch View Table Start --}}
+
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
-                            <h4 class="text-blue text-center">Batch</h4>
+                        <h4 class="text-blue text-center">Batch</h4>
                     </div>
-                    <button class="btn btn-primary mb-4 align-middle"  data-toggle="modal" data-target="#addBatch">Add Batch</button>
+                    <button class="btn btn-primary mb-4 align-middle" data-toggle="modal" data-target="#addBatch">Add
+                        Batch</button>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -49,158 +54,399 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                                 @php
-                                    $n=1;
+                                    $n = 1;
                                 @endphp
-                                @foreach ($batches as $batch)
-                                <tr class="text-center">
-                                    <th scope="row">{{ $n }}</th>
-                                    <td>{{ $batch->batch_name }}</td>
-                                    <td>{{ $batch->starting_date }}</td>
-                                    <td>{{ $batch->ending_date }}</td>
-                                    <td><span class="badge badge-{{ $batch->status ? "success":"danger" }}">{{ $batch->status ? "Running":"Passout" }}</span></td>
-                                    <td>
-                                        <a data-id="{{ $batch->id }}" data-toggle="modal" id="btnedit" data-target="#editBatch"  class="btn btn-primary text-white editBatch">Edit</a>
-                                        <a data-id="{{ $batch->id }}"  class="btn btn-danger text-white deleteBatch">Delete</a>
-                                    </td>
-                                </tr>
-                                @php
-                                    $n=$n+1;
-                                @endphp
-                                @endforeach
+                                @forelse ($batches as $batch)
+                                    <tr class="text-center">
+                                        <th scope="row">{{ $n }}</th>
+                                        <td>{{ $batch->batch_name }}</td>
+                                        <td>{{ $batch->starting_date }}</td>
+                                        <td>{{ $batch->ending_date }}</td>
+                                        <td><span
+                                                class="badge badge-{{ $batch->status ? 'success' : 'danger' }}">{{ $batch->status ? 'Running' : 'Passout' }}</span>
+                                        </td>
+                                        <td>
+                                            <a data-id="{{ $batch->id }}" data-toggle="modal" id="btnedit"
+                                                data-target="#editBatch"
+                                                class="btn btn-primary text-white editBatch">Edit</a>
+                                            <a data-id="{{ $batch->id }}" data-toggle="modal" id="btndelete"
+                                                data-target="#deleteBatch"
+                                                class="btn btn-danger text-white deleteBatch">Delete</a>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $n = $n + 1;
+                                    @endphp
+                                @empty
+                                    <tr>
+                                        <td class="text-center" colspan="6">No data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                     {{ $batches->links('vendor.pagination.bootstrap-5') }}
                 </div>
 
-                <!-- Button trigger modal -->
-                <!-- Modal -->
-                <div class="modal fade" id="addBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                {{-- Batch View Table End --}}
+
+                {{-- Add Batch Modal Start --}}
+                <div class="modal fade" id="addBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content ">
                             <form id="Batch_add">
                                 <div class="modal-header bg-secondary">
-                                        <h5 class="modal-title">Add Batch</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                    </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="form-group">
-                                        @csrf
-                                      <label for="">Batch Name</label>
-                                      <input type="text" name="batch_name" id="" class="form-control" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="">Starting Date</label>
-                                      <input type="date" name="starting_date" id="" class="form-control" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="">Ending Date</label>
-                                      <input type="date" name="ending_date" id="" class="form-control" placeholder="">
+                                    <h5 class="modal-title">Add Batch</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="form-group">
+                                            @csrf
+                                            <label for="">Batch Name</label>
+                                            <input type="text" name="batch_name" id="" class="form-control"
+                                                placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Starting Date</label>
+                                            <input type="date" name="starting_date" id="" class="form-control"
+                                                placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Ending Date</label>
+                                            <input type="date" name="ending_date" id="" class="form-control"
+                                                placeholder="">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" id="btnbatch" class="btn btn-primary">Add Batch</button>
-                            </div>
-                        </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btnbatch" class="btn btn-primary">Add Batch</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+                {{-- Add Batch Modal End --}}
 
                 {{-- Edit Modal of Batch Start  --}}
-                <div class="modal fade" id="editBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                <div class="modal fade" id="editBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content ">
                             <form id="updateBatch">
                                 <div class="modal-header bg-secondary">
-                                        <h5 class="modal-title">Edit Batch</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                    </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="form-group">
-                                        @csrf
-                                      <label for="">Batch Name</label>
-                                      <input type="text" name="edit_batch_name" id="edit_batch_name" class="form-control" placeholder="">
-                                      <input type="hidden" name="id" id="id">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="">Starting Date</label>
-                                      <input type="date" name="edit_starting_date" id="edit_stating_date" class="form-control" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="">Ending Date</label>
-                                      <input type="date" name="edit_ending_date" id="edit_ending_date" class="form-control" placeholder="">
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="">Status</label>
-                                      <select class="form-control" name="edit_status" id="status">
-                                        <option value="1">Running</option>
-                                        <option value="0">Passout</option>
-                                      </select>
+                                    <h5 class="modal-title">Edit Batch</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="form-group">
+                                            @csrf
+                                            <label for="">Batch Name</label>
+                                            <input type="text" name="edit_batch_name" id="edit_batch_name"
+                                                class="form-control" placeholder="">
+                                            <input type="hidden" name="id" id="id">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Starting Date</label>
+                                            <input type="date" name="edit_starting_date" id="edit_stating_date"
+                                                class="form-control" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Ending Date</label>
+                                            <input type="date" name="edit_ending_date" id="edit_ending_date"
+                                                class="form-control" placeholder="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">Status</label>
+                                            <select class="form-control" name="edit_status" id="status">
+                                                <option value="1">Running</option>
+                                                <option value="0">Passout</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
-                                <button type="submit" id="btnupdate" class="btn btn-primary">Update Batch</button>
-                            </div>
-                        </form>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btnupdate" class="btn btn-primary">Update Batch</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{-- Edit Modal of Batch End --}}
+
+                {{-- Delete Modal of Batch Start --}}
+                <div class="modal fade" id="deleteBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="delete_Batch">
+                                <div class="modal-header bg-danger">
+                                    <h5 class="modal-title">Delete Batch</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <h4 class="text-danger">Are you sure you want to delete batch ?</h4>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btnDelete" class="btn btn-danger">Confirm Delete</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
 
-                {{-- Edit Modal of Batch End --}}
-                <!-- Responsive tables End -->
+                {{-- Delete Modal of Batch End --}}
 
-                  <!-- Responsive Add course tables Start -->
-                  <div class="pd-20 card-box mb-30">
+                {{-- Batch Modue End --}}
+
+
+
+                <!-- Responsive Add course/Program tables Start -->
+                <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
-                            <h4 class="text-blue text-center">Course/Program</h4>
+                        <h4 class="text-blue text-center">Course/Program</h4>
                     </div>
-                    <span class="btn btn-primary mb-4 align-middle">Add Course</span>
+                    <span class="btn btn-primary mb-4 align-middle" data-toggle="modal" data-target="#addProgram">Add
+                        Course</span>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
                                 <tr class="text-center">
                                     <th scope="col">S.N</th>
-                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Program/Course Name</th>
                                     <th scope="col">Faculty</th>
                                     <th scope="col">University</th>
                                     <th scope="col">Type</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody >
-                                <tr class="text-center">
-                                    <th scope="row">1</th>
-                                    <td>Bachelor of Computer Application</td>
-                                    <td>Humanity</td>
-                                    <td>Tribhuvan University</td>
-                                    <td><span class="badge badge-success">Semester</span></td>
-                                    <td>
-                                        <a href="" class="btn btn-primary">Edit</a>
-                                        <a href="" class="btn btn-danger">Delete</a>
-                                    </td>
-                                </tr>
+                            <tbody>
+                                @php
+                                    $n = 1;
+                                @endphp
+                                @forelse ($programs as $program)
+                                    <tr class="text-center">
+                                        <td scope="row">{{ $n }}</td>
+                                        <td>{{ $program->program_name }}</td>
+                                        <td>{{ $program->faculty }}</td>
+                                        <td>{{ $program->univeristy }}</td>
+                                        <td><span class="badge badge-success">{{ $program->types->Type }}</span></td>
+                                        <td><span class="badge badge-pill badge-{{ $program->status ? "success":"danger" }}">{{ $program->status ? "Active":"Inactive" }}</span></td>
+                                        <td>
+                                            <a data-id="{{ $program->id }}" class="btn btn-primary editProgram text-white" data-toggle="modal"  data-target="#editProgram">Edit</a>
+                                            <a data-id="{{ $program->id }}" data-toggle="modal"  data-target="#deleteProgram" class="btn btn-danger text-white deleteProgram">Delete</a>
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $n = $n + 1;
+                                    @endphp
+                                @empty
+                                    <tr>
+                                        <td class="text-center" colspan="7">No data found</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
+                    {{ $programs->links('vendor.pagination.bootstrap-5') }}
                 </div>
-                <!-- Responsive tables End -->
+                <!-- Responsive Add Course/Program table End -->
 
-                  <!-- Responsive  type tables Start -->
-                  <div class="pd-20 card-box mb-30">
+                {{-- Add Program Modal Start --}}
+                <div class="modal fade" id="addProgram" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="Program_add">
+                                <div class="modal-header bg-secondary">
+                                    <h5 class="modal-title">Add Program</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="form-group">
+                                            @csrf
+                                            <label for="">Program Name</label>
+                                            <input type="text" name="program_name" id=""
+                                                class="form-control" placeholder="BCA,BHM etc..">
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="">Faculty</label>
+                                                <select class="form-control" name="faculty" id="">
+                                                    <option value="Humanity">Humanity</option>
+                                                    <option value="Management">Management</option>
+                                                    <option value="Science">Science</option>
+                                                    <option value="Health & Science">Health & Science</option>
+                                                    <option value="Science & Technology">Science & Technology</option>
+                                                    <option value="Law">Law</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="">University</label>
+                                                <select class="form-control" name="univeristy" id="">
+                                                    <option value="CTEVT">CTEVT</option>
+                                                    <option value="Gandaki univeristy">Gandaki univeristy</option>
+                                                    <option value="Kathmandu Univeristy">Kathmandu Univeristy</option>
+                                                    <option value="Tribhuvan Univeristy">Tribhuvan Univeristy</option>
+                                                    <option value="Pokhara Univeristy">Pokhara Univeristy</option>
+                                                    <option value="Purbanchal Univeristy">Purbanchal Univeristy</option>
+                                                    <option value="Neb">Neb</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="">Types</label>
+                                                <select class="form-control" name="type" id="">
+                                                    @forelse ($types as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->Type }}</option>
+                                                    @empty
+                                                        <option>No data</option>
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btnprogram" class="btn btn-primary">Add Program</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {{-- Add Program Modal End --}}
+
+                {{-- Edit Modal of Program Start  --}}
+                <div class="modal fade" id="editProgram" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="updateProgram">
+                                <div class="modal-header bg-secondary">
+                                    <h5 class="modal-title">Edit Program</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="form-group">
+                                            @csrf
+                                            <label for="">Program Name</label>
+                                            <input type="text" name="edit_program_name" id="edit_program_name" class="form-control" placeholder="BCA,BHM etc..">
+                                            <input type="hidden" name="id" id="program_id">
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="">Faculty</label>
+                                                <select class="form-control" name="edit_faculty" id="edit_faculty">
+                                                    <option value="Humanity">Humanity</option>
+                                                    <option value="Management">Management</option>
+                                                    <option value="Science">Science</option>
+                                                    <option value="Health & Science">Health & Science</option>
+                                                    <option value="Science & Technology">Science & Technology</option>
+                                                    <option value="Law">Law</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="">University</label>
+                                                <select class="form-control" name="edit_univeristy" id="edit_univeristy">
+                                                    <option value="CTEVT">CTEVT</option>
+                                                    <option value="Gandaki univeristy">Gandaki univeristy</option>
+                                                    <option value="Kathmandu Univeristy">Kathmandu Univeristy</option>
+                                                    <option value="Tribhuvan Univeristy">Tribhuvan Univeristy</option>
+                                                    <option value="Pokhara Univeristy">Pokhara Univeristy</option>
+                                                    <option value="Purbanchal Univeristy">Purbanchal Univeristy</option>
+                                                    <option value="Neb">Neb</option>
+                                                    <option value="Others">Others</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="">Types</label>
+                                                <select class="form-control" name="edit_type" id="edit_type">
+                                                    @forelse ($types as $type)
+                                                        <option value="{{ $type->id }}">{{ $type->Type }}</option>
+                                                    @empty
+                                                        <option>No data</option>
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                          <label for="">Status</label>
+                                          <select class="form-control" name="edit_status" id="edit_status">
+                                            <option value="1">Active</option>
+                                            <option value="0">Inactive</option>
+                                          </select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" id="btnprogramupdate" class="btn btn-primary">Update
+                                            Batch</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                {{-- Edit Modal of Program End --}}
+
+                {{-- Delete Modal of Batch Start --}}
+                <div class="modal fade" id="deleteProgram" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="delete_program">
+                                <div class="modal-header bg-danger">
+                                    <h5 class="modal-title">Delete Programs</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <h4 class="text-danger">Are you sure you want to delete program ?</h4>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" id="btnProgramDelete" class="btn btn-danger">Confirm Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Delete Modal of Program End --}}
+
+
+                <!-- Responsive  type tables Start -->
+                <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
-                            <h4 class="text-blue h4 text-center">Type</h4>
+                        <h4 class="text-blue h4 text-center">Type</h4>
                     </div>
                     <span class="btn btn-primary mb-4 align-middle">Add Semester</span>
                     <span class="btn btn-primary mb-4 align-middle">View Semester</span>
@@ -218,7 +464,7 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                                 <tr class="text-center">
                                     <th scope="row">1</th>
                                     <td>First Semester</td>
@@ -233,8 +479,8 @@
                         </table>
                     </div>
 
-                     {{-- Semester year view start --}}
-                       {{-- Semester year view start --}}
+                    {{-- Semester year view start --}}
+                    {{-- Semester year view start --}}
 
                     <div class="table-responsive">
                         <table class="table table-striped">
@@ -247,7 +493,7 @@
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
-                            <tbody >
+                            <tbody>
                                 <tr class="text-center">
                                     <th scope="row">1</th>
                                     <td>First Year</td>
@@ -262,12 +508,10 @@
                         </table>
                     </div>
 
-                     {{-- Semester year view start --}}
+                    {{-- Semester year view start --}}
                 </div>
-                <!-- Responsive tables End -->
-
+                <!-- Responsive  type tables End -->
 
             </div>
-        </div>
     </div>
 @endsection

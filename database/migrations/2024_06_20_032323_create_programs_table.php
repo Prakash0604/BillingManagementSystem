@@ -16,9 +16,8 @@ return new class extends Migration
             $table->string('program_name');
             $table->enum('faculty',['Humanity','Management','Science','Health & Science','Science & Technology','Law'])->nullable();
             $table->enum('univeristy',['CTEVT','Gandaki univeristy','Kathmandu Univeristy','Tribhuvan Univeristy','Pokhara Univeristy','Purbanchal Univeristy','Neb','Others'])->nullable();
-            // $table->enum('type',['Semester','Year','N\A'])->nullable();
             $table->unsignedBigInteger('type_id');
-            $table->foreign('type_id')->references('id')->onUpdate('cascade')->on('types');
+            $table->foreign('type_id')->references('id')->onUpdate('cascade')->on('semesters');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
