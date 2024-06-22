@@ -298,10 +298,16 @@ $(document).ready(function () {
         });
         // Batch Delete Function End
 
-
-
-
     // Program Function End
+
+    // Hide Function
+    $(document).on("click",".hide",function(){
+        // $("#semesterhide").hide();
+        $("#yearhide").hide();
+    });
+    $(document).on("click")
+
+
 });
 
 
