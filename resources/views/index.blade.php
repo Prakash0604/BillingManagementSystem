@@ -20,6 +20,9 @@
 	<link rel="stylesheet" type="text/css" href="vendors/styles/icon-font.min.css">
 	<link rel="stylesheet" type="text/css" href="src/plugins/jvectormap/jquery-jvectormap-2.0.3.css">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('jqueryfunction/setup.js') }}"></script>
 
 </head>
 <body>
@@ -335,10 +338,10 @@
 	<script src="{{ asset('vendors/scripts/process.js') }}"></script>
 	<script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
 	<script src="{{ asset('src/plugins/jQuery-Knob-master/jquery.knob.min.js') }}"></script>
-	<script src="{{ asset('src/plugins/highcharts-6.0.7/code/highcharts.js') }}"></script>
+	{{-- <script src="{{ asset('src/plugins/highcharts-6.0.7/code/highcharts.js') }}"></script>
 	<script src="{{ asset('src/plugins/highcharts-6.0.7/code/highcharts-more.js') }}"></script>
 	<script src="{{ asset('src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
-	<script src="{{ asset('src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+	<script src="{{ asset('src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script> --}}
 	<script src="{{ asset('vendors/scripts/dashboard2.js') }}"></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SetupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +34,10 @@ Route::post('/register', [AuthController::class, 'storeRegister'])
 // Authentication Route End
 
 Route::middleware('AdminAuth')->group(function () {
-    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
-    Route::get('/setup', [AdminController::class, 'setup']) ->name('setup');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/setup', [SetupController::class, 'setup']) ->name('setup');
+    Route::get('/setup/edit/batch/{id}',[SetupController::class,'edit_batch'])->name('edit_batch');
+    Route::post('/setup/update/batch',[SetupController::class,'updateBatch'])->name('update_batch');
+    Route::post('/add/batch',[SetupController::class,'storeBatch'])->name('storeBatch');
 });
