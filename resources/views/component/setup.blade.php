@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
-                                <h4>Basic Tables</h4>
+                                <h4>Setup</h4>
                             </div>
                             <nav aria-label="breadcrumb" role="navigation">
                                 <ol class="breadcrumb">
@@ -31,12 +31,12 @@
                         </div>
                     </div>
                 </div>
-             <!-- Responsive tables Start -->
+             <!-- Responsive tables Batch  Start -->
                 <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                             <h4 class="text-blue text-center">Batch</h4>
                     </div>
-                    <span class="btn btn-primary mb-4 align-middle">Add Batch</span>
+                    <button class="btn btn-primary mb-4 align-middle"  data-toggle="modal" data-target="#addBatch">Add Batch</button>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -50,24 +50,118 @@
                                 </tr>
                             </thead>
                             <tbody >
+                                @php
+                                    $n=1;
+                                @endphp
+                                @foreach ($batches as $batch)
                                 <tr class="text-center">
-                                    <th scope="row">1</th>
-                                    <td>2080</td>
-                                    <td>2080-04-01</td>
-                                    <td>2080-05-32</td>
-                                    <td><span class="badge badge-success">Running</span></td>
+                                    <th scope="row">{{ $n }}</th>
+                                    <td>{{ $batch->batch_name }}</td>
+                                    <td>{{ $batch->starting_date }}</td>
+                                    <td>{{ $batch->ending_date }}</td>
+                                    <td><span class="badge badge-{{ $batch->status ? "success":"danger" }}">{{ $batch->status ? "Running":"Passout" }}</span></td>
                                     <td>
-                                        <a href="" class="btn btn-primary">Edit</a>
-                                        <a href="" class="btn btn-danger">Delete</a>
+                                        <a data-id="{{ $batch->id }}" data-toggle="modal" id="btnedit" data-target="#editBatch"  class="btn btn-primary text-white editBatch">Edit</a>
+                                        <a data-id="{{ $batch->id }}"  class="btn btn-danger text-white deleteBatch">Delete</a>
                                     </td>
                                 </tr>
+                                @php
+                                    $n=$n+1;
+                                @endphp
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
+                    {{ $batches->links('vendor.pagination.bootstrap-5') }}
                 </div>
+
+                <!-- Button trigger modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="addBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="Batch_add">
+                                <div class="modal-header bg-secondary">
+                                        <h5 class="modal-title">Add Batch</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                    </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="form-group">
+                                        @csrf
+                                      <label for="">Batch Name</label>
+                                      <input type="text" name="batch_name" id="" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Starting Date</label>
+                                      <input type="date" name="starting_date" id="" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Ending Date</label>
+                                      <input type="date" name="ending_date" id="" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" id="btnbatch" class="btn btn-primary">Add Batch</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Edit Modal of Batch Start  --}}
+                <div class="modal fade" id="editBatch" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content ">
+                            <form id="updateBatch">
+                                <div class="modal-header bg-secondary">
+                                        <h5 class="modal-title">Edit Batch</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                    </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <div class="form-group">
+                                        @csrf
+                                      <label for="">Batch Name</label>
+                                      <input type="text" name="edit_batch_name" id="edit_batch_name" class="form-control" placeholder="">
+                                      <input type="hidden" name="id" id="id">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Starting Date</label>
+                                      <input type="date" name="edit_starting_date" id="edit_stating_date" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Ending Date</label>
+                                      <input type="date" name="edit_ending_date" id="edit_ending_date" class="form-control" placeholder="">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="">Status</label>
+                                      <select class="form-control" name="edit_status" id="status">
+                                        <option value="1">Running</option>
+                                        <option value="0">Passout</option>
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"  data-dismiss="modal">Close</button>
+                                <button type="submit" id="btnupdate" class="btn btn-primary">Update Batch</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Edit Modal of Batch End --}}
                 <!-- Responsive tables End -->
 
-                  <!-- Responsive tables Start -->
+                  <!-- Responsive Add course tables Start -->
                   <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                             <h4 class="text-blue text-center">Course/Program</h4>
@@ -103,7 +197,7 @@
                 </div>
                 <!-- Responsive tables End -->
 
-                  <!-- Responsive tables Start -->
+                  <!-- Responsive  type tables Start -->
                   <div class="pd-20 card-box mb-30">
                     <div class="clearfix mb-20">
                             <h4 class="text-blue h4 text-center">Type</h4>
