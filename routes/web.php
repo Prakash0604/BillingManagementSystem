@@ -39,5 +39,14 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('/setup', [SetupController::class, 'setup']) ->name('setup');
     Route::get('/setup/edit/batch/{id}',[SetupController::class,'edit_batch'])->name('edit_batch');
     Route::post('/setup/update/batch',[SetupController::class,'updateBatch'])->name('update_batch');
+    Route::get('setup/batch/delete/{id}',[SetupController::class,'deleteBatch'])->name('delete_batch');
     Route::post('/add/batch',[SetupController::class,'storeBatch'])->name('storeBatch');
+
+    // Program Route Start
+    Route::post('/add/program',[SetupController::class,'storeProgram'])->name('storeProgram');
+    Route::get('/setup/edit/program/{id}',[SetupController::class,'edit_program'])->name('edit_program');
+    Route::post('/setup/update/program',[SetupController::class,'updateProgram'])->name('update_program');
+    Route::get('setup/program/delete/{id}',[SetupController::class,'deleteProgram'])->name('delete_program');
+    // Program Route End
+
 });
