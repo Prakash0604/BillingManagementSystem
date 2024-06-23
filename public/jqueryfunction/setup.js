@@ -302,10 +302,30 @@ $(document).ready(function () {
 
     // Hide Function
     $(document).on("click",".hide",function(){
-        // $("#semesterhide").hide();
+        $("#semesterhide").hide();
+
         $("#yearhide").hide();
     });
-    $(document).on("click")
+    $(document).on("click",'.pid',function(){
+       let id=$(this).attr("value");
+       console.log(id);
+       $.ajax({
+        method:"get",
+        url:"setup/program/select/filter/"+id,
+        success:function(data){
+            console.log(data.message);
+            if(data.message.type_id==2){
+                $("#yearhide").show();
+                $("#semesterhide").hide();
+
+            }else{
+                $("#yearhide").hide();
+                $("#semesterhide").show();
+            }
+
+        }
+       })
+    });
 
 
 });

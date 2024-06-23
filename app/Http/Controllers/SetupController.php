@@ -171,4 +171,16 @@ class SetupController extends Controller
     // Delete Batch End
 
     // Program Function End
+
+
+    public function selectProgram($id){
+        try{
+
+            $program=Program::find($id);
+            return response()->json(['success'==true,'message'=>$program,200]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>true,'message'=>$e->getMessage()]);
+        }
+
+    }
 }
