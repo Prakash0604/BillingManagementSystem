@@ -47,6 +47,7 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('/setup/edit/program/{id}',[SetupController::class,'edit_program'])->name('edit_program');
     Route::post('/setup/update/program',[SetupController::class,'updateProgram'])->name('update_program');
     Route::get('setup/program/delete/{id}',[SetupController::class,'deleteProgram'])->name('delete_program');
+    Route::get('setup/program/select/filter/{id}',[SetupController::class,'selectProgram'])->name('selectProgram');
     // Program Route End
 
 });

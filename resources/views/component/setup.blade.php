@@ -546,19 +546,11 @@
                                   <label for="">Program Name</label>
 
                                   <select class="form-control" name="program_name" id="">
+                                    <option selected value="">Choose....</option>
                                       @foreach ($programs as $program)
-                                      <option value="{{ $program->id }}">{{ $program->program_name }}</option>
+                                      <option class="pid" value="{{ $program->id }}">{{ $program->program_name }}</option>
                                       @endforeach
                                   </select>
-                                </div>
-                                <div class="form-group">
-                                  <label for="">Type</label>
-
-                                  <select class="form-control" name="" id="">
-                                      @foreach ($types as $type)
-                                      <option>{{ $type->Type }}</option>
-                                      @endforeach
-                                    </select>
                                 </div>
                                 <div class="form-group" id="semesterhide">
                                   <label for="">Semester</label>
@@ -573,6 +565,9 @@
                                     <option value="8th semester">8th semester</option>
                                   </select>
                                 </div>
+
+
+
                                 <div class="form-group" id="yearhide">
                                   <label for="">Year</label>
                                   <select class="form-control" name="year" id="">
