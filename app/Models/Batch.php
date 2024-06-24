@@ -9,4 +9,7 @@ class Batch extends Model
 {
     use HasFactory;
     protected $fillable=['batch_name','starting_date','ending_date','status'];
+    public function semester(){
+        return $this->hasMany(currentbatch::class);
+    }
 }

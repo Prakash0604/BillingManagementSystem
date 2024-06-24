@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Batch;
 use App\Models\Program;
 use App\Models\Semester;
+use App\Models\currentbatch;
 use Illuminate\Http\Request;
 
 class SetupController extends Controller
@@ -15,7 +16,9 @@ class SetupController extends Controller
         $batches = Batch::orderBy('id', 'desc')->paginate(4);
         $types = Semester::all();
         $programs=Program::with('types')->orderBy('id','desc')->paginate(4);
-        $data = compact('batches', 'types','programs');
+        $semesters=currentbatch::select('semester','batch_id','program_id','status')->with('batch','program')->get();
+        $years=currentbatch::select('year','batch_id','program_id','status')->with('batch','program')->get();
+        $data = compact('batches', 'types','programs','semesters','years');
         return view('component.setup', $data);
     }
 
@@ -180,6 +183,26 @@ class SetupController extends Controller
             return response()->json(['success'==true,'message'=>$program,200]);
         }catch(\Exception $e){
             return response()->json(['success'=>true,'message'=>$e->getMessage()]);
+        }
+
+    }
+
+    public function runningSemester(Request $request){
+        try{
+
+            $request->validate([
+                'batch_name'=>'required',
+                'program_name'=>'required',
+            ]);
+            currentbatch::create([
+                'batch_id'=>$request->batch_name,
+                'program_id'=>$request->program_name,
+                'semester'=>$request->semester,
+                'year'=>$request->year,
+            ]);
+            return response()->json(['success'=>true,200]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'message'=>$e->getMessage(),500]);
         }
 
     }

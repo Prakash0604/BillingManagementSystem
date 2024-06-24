@@ -12,4 +12,7 @@ class Program extends Model
     public function types(){
        return  $this->belongsTo(Semester::class,'type_id','id');
     }
+    public function semester(){
+        return $this->hasMany(currentbatch::class);
+    }
 }

@@ -326,8 +326,57 @@ $(document).ready(function () {
         }
        })
     });
+    // Hide Function End
+
+    $("#courseProgram_add").submit(function(event){
+        event.preventDefault();
+        let formdata=new FormData(this);
+        console.log(formdata);
+        $("#btncurrentprogram").text("Saving...");
+        $("#btncurrentprogram").prop("disabled",true);
+        $.ajax({
+            method:"POST",
+            url:"setup/current/runing/semester",
+            data:formdata,
+            contentType:false,
+            processData:false,
+            success:function(data){
+                if(data.success==true){
+                    Swal.fire({
+                        icon:"success",
+                        title:"Semester has been added",
+                        showConfirmButton:false,
+                        timer:1500,
+                    });
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+                if(data.success==false){
+                    console.log(data.message);
+                    Swal.fire({
+                        icon:"error",
+                        title:"Something went wrong",
+                        showConfirmButton:false,
+                        timer:1500
+                    });
+                    $("#btncurrentprogram").text("Add Semester");
+                    $("#btncurrentprogram").prop("disabled",false);
+
+                }
+            }
+        })
+    })
 
 
+    $(".hidesemester").hide();
+    $(".hideyear").hide();
+    $(".viewsemester").on("click",function(){
+        $(".hidesemester").toggle(2000);
+    })
+     $(".viewyear").on("click",function(){
+        $(".hideyear").toggle(2000);
+    })
 });
 
 

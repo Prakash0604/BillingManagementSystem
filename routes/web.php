@@ -48,6 +48,7 @@ Route::middleware('AdminAuth')->group(function () {
     Route::post('/setup/update/program',[SetupController::class,'updateProgram'])->name('update_program');
     Route::get('setup/program/delete/{id}',[SetupController::class,'deleteProgram'])->name('delete_program');
     Route::get('setup/program/select/filter/{id}',[SetupController::class,'selectProgram'])->name('selectProgram');
+    Route::post('setup/current/runing/semester',[SetupController::class,'runningSemester'])->name('runningSemester');
     // Program Route End
 
 });

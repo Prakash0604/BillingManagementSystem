@@ -452,36 +452,40 @@
                 <h4 class="text-blue h4 text-center">Type</h4>
             </div>
             <span class="btn btn-primary mb-4 align-middle hide" data-toggle="modal"  data-target="#addCourseProgram">Add Course Program</span>
-            <span class="btn btn-primary mb-4 align-middle">View Semester</span>
-            <span class="btn btn-primary mb-4 align-middle">View Year</span>
+            <span class="btn btn-primary mb-4 align-middle viewsemester">View Semester</span>
+            <span class="btn btn-primary mb-4 align-middle viewyear">View Year</span>
             {{-- Semester year view start --}}
 
-            <div class="table-responsive">
+            <div class="table-responsive hidesemester">
                 <table class="table table-striped">
                     <thead>
                         <tr class="text-center">
                             <th scope="col">S.N</th>
                             <th scope="col">Batch Name</th>
                             <th scope="col">Program Name</th>
-                            <th scope="col">Types</th>
                             <th scope="col">Current Semester/Year</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse ($semesters as $semester)
                         <tr class="text-center">
                             <td>1</td>
-                            <td>First Semester</td>
-                            <td>00245</td>
-                            <td>1</td>
-                            <td>First Semester</td>
-                            <td><span class="badge badge-success">Active</span></td>
+                            <td>{{ $semester->batch->batch_name }}</td>
+                            <td>{{ $semester->program->program_name }}</td>
+                            <td>{{ $semester->semester }}</td>
+                            <td><span class="badge badge-{{ $semester->status ? "success":"danger" }}">{{ $semester->status? "Running":"Inactive" }}</span></td>
                             <td>
                                 <a href="" class="btn btn-primary">Edit</a>
                                 <a href="" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="6">No data found</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -489,28 +493,36 @@
             {{-- Semester year view start --}}
             {{-- Semester year view start --}}
 
-            <div class="table-responsive">
+            <div class="table-responsive hideyear mt-4">
                 <table class="table table-striped">
                     <thead>
                         <tr class="text-center">
                             <th scope="col">S.N</th>
-                            <th scope="col">Year</th>
-                            <th scope="col">Code</th>
-                            <th scope="col">Tag</th>
+                            <th scope="col">Batch Name</th>
+                            <th scope="col">Program Name</th>
+                            <th scope="col">Current Semester/Year</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @forelse ($years as $year)
                         <tr class="text-center">
-                            <th scope="row">1</th>
-                            <td>First Year</td>
-                            <td>00245</td>
-                            <td><span class="badge badge-success">Active</span></td>
+                            <td>1</td>
+                            <td>{{ $year->batch->batch_name }}</td>
+                            <td>{{ $year->program->program_name }}</td>
+                            <td>{{ $year->year }}</td>
+                            <td><span class="badge badge-{{ $year->status ? "success":"danger" }}">{{ $year->status? "Running":"Inactive" }}</span></td>
                             <td>
                                 <a href="" class="btn btn-primary">Edit</a>
                                 <a href="" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
+                        @empty
+                        <tr>
+                            <td class="text-center" colspan="6">No data found</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -535,6 +547,7 @@
                         <div class="modal-body">
                             <div class="container-fluid">
                                 <div class="form-group">
+                                    @csrf
                                   <label for="">Batch Name</label>
                                   <select class="form-control" name="batch_name" id="">
                                     @foreach ($batches as $batch)
@@ -555,6 +568,7 @@
                                 <div class="form-group" id="semesterhide">
                                   <label for="">Semester</label>
                                   <select class="form-control" name="semester" id="">
+                                    <option selected value="">select any one</option>
                                     <option value="1st semester">1st semester</option>
                                     <option value="2nd semester">2nd semester</option>
                                     <option value="3rd semester">3rd semester</option>
@@ -571,6 +585,7 @@
                                 <div class="form-group" id="yearhide">
                                   <label for="">Year</label>
                                   <select class="form-control" name="year" id="">
+                                    <option selected value="">Select any one</option>
                                     <option value="1st year">1st year</option>
                                     <option value="2nd year">2nd year</option>
                                     <option value="3rd year">3rd year</option>
@@ -581,7 +596,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" id="btnprogram" class="btn btn-primary">Add Program</button>
+                            <button type="submit" id="btncurrentprogram" class="btn btn-primary">Add Semester</button>
                         </div>
                     </form>
                 </div>

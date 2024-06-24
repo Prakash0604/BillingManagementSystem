@@ -9,4 +9,10 @@ class currentbatch extends Model
 {
     use HasFactory;
     protected $fillable=['batch_id','program_id','year','semester','status','type_id'];
+    public function batch(){
+        return $this->belongsTo(Batch::class);
+    }
+    public function program(){
+        return $this->belongsTo(Program::class);
+    }
 }

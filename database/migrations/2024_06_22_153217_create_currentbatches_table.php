@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('batch_id')->references('id')->on('batches')->onUpdate('cascade');
             $table->unsignedBigInteger('program_id');
             $table->foreign('program_id')->references('id')->on('programs')->onUpdate('cascade');
-            $table->enum('semester',['1st semester','2nd semester','3rd semester','4th semester','5th semester','6th semester','7th semester','8th semester'])->nullable()->default('1st semester');
-            $table->enum('year',['1st year','2nd year','3rd year','4th year'])->default('1st year')->nullable();
+            $table->enum('semester',['1st semester','2nd semester','3rd semester','4th semester','5th semester','6th semester','7th semester','8th semester'])->nullable();
+            $table->enum('year',['1st year','2nd year','3rd year','4th year'])->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });
