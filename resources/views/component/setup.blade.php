@@ -453,8 +453,7 @@
             </div>
             <span class="btn btn-primary mb-4 align-middle hide" data-toggle="modal" data-target="#addCourseProgram">Add
                 Running Semester</span>
-            <span class="btn btn-primary mb-4 align-middle viewsemester">View Semester</span>
-            <span class="btn btn-primary mb-4 align-middle viewyear">View Year</span>
+            <span class="btn btn-primary mb-4 align-middle viewsemester">Show/Hide Semester</span>
             {{-- Semester year view start --}}
 
             <div class="table-responsive hidesemester">
@@ -470,9 +469,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $n=1;
+                        @endphp
                         @forelse ($semesters as $semester)
                             <tr class="text-center">
-                                <td>1</td>
+                                <td>{{ $n }}</td>
                                 <td>{{ $semester->batch->batch_name }}</td>
                                 <td>{{ $semester->program->program_name }}</td>
                                 @if ($semester->semester != null)
@@ -488,9 +490,12 @@
                                 <td>
                                     <a class="btn btn-primary text-white editsemester" data-id="{{ $semester->id }}"
                                         data-toggle="modal" data-target="#editCourseProgram">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    <a class="btn btn-danger deletesemester" data-id="{{ $semester->id }}" data-toggle="modal" data-target="#deleteCourseProgram">Delete</a>
                                 </td>
                             </tr>
+                            @php
+                                $n=$n+1;
+                            @endphp
                         @empty
                             <tr>
                                 <td class="text-center" colspan="6">No data found</td>
@@ -498,6 +503,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $semesters->links("pagination::bootstrap-5") }}
             </div>
 
             {{-- Semester year view start --}}
@@ -694,6 +700,35 @@
         </div>
         {{-- Course Batch End --}}
         <!-- Responsive  type tables End -->
+
+                <!-- Edit Modal start -->
+                <div class="modal fade" id="deleteCourseProgram" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form id="deleteBatchCourse">
+                            <div class="modal-header bg-danger">
+                                <h5 class="modal-title">Edit Current Semester</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    @csrf
+                                    <h5  class="text-danger">Are you sure you want to delete semester ?</h5>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" id="btndeletesemester" class="btn btn-danger">Confirm Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            {{-- Course Batch End --}}
 
     </div>
     </div>
