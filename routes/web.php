@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,8 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('setup/program/select/filter/{id}',[SetupController::class,'selectProgram'])->name('selectProgram');
     Route::post('setup/current/runing/semester',[SetupController::class,'runningSemester'])->name('runningSemester');
     Route::get('setup/current/running/edit/{id}',[SetupController::class,'editSemester'])->name('editSemester');
+    Route::get('/setup/current/running/program/delete/{id}',[SetupController::class,'deleteSemester'])->name('deleteSemester');
     // Program Route End
-
+    // Route::get('/students/add',[StudentController::class,'addstudent']);
+    Route::resource('students',StudentController::class);
 });

@@ -16,7 +16,7 @@ class SetupController extends Controller
         $batches = Batch::orderBy('id', 'desc')->paginate(4);
         $types = Semester::all();
         $programs=Program::with('types')->orderBy('id','desc')->paginate(4);
-        $semesters=currentbatch::with('batch','program')->get();
+        $semesters=currentbatch::orderBy('id','DESC')->with('batch','program')->paginate(10);
         // $semesters=currentbatch::where('semesters')->with('batch','program')->get();
         // $years=currentbatch::select('year','batch_id','program_id','status')->with('batch','program')->get();
         $data = compact('batches', 'types','programs','semesters');
@@ -177,7 +177,8 @@ class SetupController extends Controller
     // Program Function End
 
 
-    public function selectProgram($id){
+    public function selectProgram($id)
+    {
         try{
 
             $program=Program::find($id);
@@ -188,7 +189,8 @@ class SetupController extends Controller
 
     }
 
-    public function runningSemester(Request $request){
+    public function runningSemester(Request $request)
+    {
         try{
 
             $request->validate([
@@ -208,17 +210,30 @@ class SetupController extends Controller
 
     }
 
-    public function editSemester($id){
+    public function editSemester($id)
+    {
         try{
 
             $semester=currentbatch::with('batch','program')->find($id);
             if($semester->semester!=NULL){
-                return response()->json(['success'=>101,'semester'=>$semester,200]);
+                return response()->json(['success'=>101,'data_semester'=>$semester,200]);
             }else{
-                return response()->json(['success'=>102,'year'=>$semester,200]);
+                return response()->json(['success'=>102,'data_year'=>$semester,200]);
             }
         }catch(\Exception $e){
             return response()->json(['success'=>false,'message'=>$e->getMessage()]);
         }
     }
+
+    public function deleteSemester($id)
+    {
+        try{
+           $semester= currentbatch::find($id);
+           $semester->delete();
+            return response()->json(['success'=>true,200]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'message'=>$e->getMessage(),500]);
+        }
+    }
+
 }

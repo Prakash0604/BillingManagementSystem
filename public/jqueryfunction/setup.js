@@ -375,15 +375,10 @@ $(document).ready(function () {
     })
 
 
-    // $(".hidesemester").hide();
-    // $(".hideyear").hide();
-    // $(".viewsemester").on("click",function(){
-    //     $(".hidesemester").toggle(2000);
-    // })
-    //  $(".viewyear").on("click",function(){
-    //     $(".hideyear").toggle(2000);
-    // });
-
+    $(".hidesemester").hide();
+    $(".viewsemester").on("click",function(){
+        $(".hidesemester").toggle(2000);
+    });
 
     $(document).on("click",'.editsemester', function () {
         $("#editsemesterhide").hide();
@@ -396,12 +391,18 @@ $(document).ready(function () {
             success: function (msg) {
                 console.log(msg);
                 if (msg.success == 101) {
+                    // $("#editsemesterhide").show();
+                    // $("#edit_batch_name").val(msg.data_semester.batch_id);
+                    // $("#edit_program_name").val(msg.data_semester.program_id);
+                    // $("#edit_semester_name").val(msg.data_semester.semester);
+
                     $("#editsemesterhide").show();
-                    $("#edit_batch_name").val(msg.semester.batch_id);
-                    $("#edit_program_name").val(msg.semester.program_id);
-                    $("#edit_semester_name").val(msg.semester.semester);
+                    // $("#edit_batch_name").val(msg.data_semester.batch_id);
+                    // $("#edit_program_name").val(msg.data_semester.program_id);
+                    $("#edit_batch_name").append(`<option selected>${msg.data_semester.batch_id}</option>`);
+                    $("#edit_semester_name").val(msg.data_semester.semester);
                 }
-                if (msg.success == 102) {
+               else if (msg.success == 102) {
                     $("#edityearhide").show();
                 }
             }
@@ -409,6 +410,48 @@ $(document).ready(function () {
     });
 
 
+
+
+    // Delete Semester Start
+
+    $(document).on("click",".deletesemester",function(){
+        let id=$(this).attr("data-id");
+        $("#deleteBatchCourse").submit(function(event){
+            event.preventDefault();
+            $("#btndeletesemester").text("Deleting...");
+            $("#btndeletesemester").prop("disabled",true);
+            $.ajax({
+                url:"/setup/current/running/program/delete/"+id,
+                method:"get",
+                success:function(data){
+                    console.log(data);
+                    if(data.success==true){
+                        Swal.fire({
+                            icon:"success",
+                            title:"Semester has been deleted successfully",
+                            showConfirmButton:false,
+                            timer:1500,
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1500);
+                    }else if(data.success==false){
+                        Swal.fire({
+                            icon:"error",
+                            title:data.msg,
+                            showConfirmButton:false,
+                            timer:1500,
+                        });
+                        $("#btndeletesemester").text("Confirm Delete");
+                        $("#btndeletesemester").prop("disabled",false);
+
+                    }
+                }
+            })
+        })
+    });
+
+    // Delete Semester End
 
 
 });
