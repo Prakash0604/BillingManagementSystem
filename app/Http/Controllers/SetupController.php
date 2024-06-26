@@ -16,9 +16,10 @@ class SetupController extends Controller
         $batches = Batch::orderBy('id', 'desc')->paginate(4);
         $types = Semester::all();
         $programs=Program::with('types')->orderBy('id','desc')->paginate(4);
-        $semesters=currentbatch::select('semester','batch_id','program_id','status')->with('batch','program')->get();
-        $years=currentbatch::select('year','batch_id','program_id','status')->with('batch','program')->get();
-        $data = compact('batches', 'types','programs','semesters','years');
+        $semesters=currentbatch::with('batch','program')->get();
+        // $semesters=currentbatch::where('semesters')->with('batch','program')->get();
+        // $years=currentbatch::select('year','batch_id','program_id','status')->with('batch','program')->get();
+        $data = compact('batches', 'types','programs','semesters');
         return view('component.setup', $data);
     }
 
@@ -205,5 +206,19 @@ class SetupController extends Controller
             return response()->json(['success'=>false,'message'=>$e->getMessage(),500]);
         }
 
+    }
+
+    public function editSemester($id){
+        try{
+
+            $semester=currentbatch::with('batch','program')->find($id);
+            if($semester->semester!=NULL){
+                return response()->json(['success'=>101,'semester'=>$semester,200]);
+            }else{
+                return response()->json(['success'=>102,'year'=>$semester,200]);
+            }
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'message'=>$e->getMessage()]);
+        }
     }
 }

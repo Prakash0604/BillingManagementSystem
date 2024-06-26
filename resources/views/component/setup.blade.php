@@ -449,9 +449,10 @@
         <!-- Responsive  type tables Start -->
         <div class="pd-20 card-box mb-30">
             <div class="clearfix mb-20">
-                <h4 class="text-blue h4 text-center">Type</h4>
+                <h4 class="text-blue h4 text-center">Running Semester</h4>
             </div>
-            <span class="btn btn-primary mb-4 align-middle hide" data-toggle="modal"  data-target="#addCourseProgram">Add Course Program</span>
+            <span class="btn btn-primary mb-4 align-middle hide" data-toggle="modal" data-target="#addCourseProgram">Add
+                Running Semester</span>
             <span class="btn btn-primary mb-4 align-middle viewsemester">View Semester</span>
             <span class="btn btn-primary mb-4 align-middle viewyear">View Year</span>
             {{-- Semester year view start --}}
@@ -470,21 +471,30 @@
                     </thead>
                     <tbody>
                         @forelse ($semesters as $semester)
-                        <tr class="text-center">
-                            <td>1</td>
-                            <td>{{ $semester->batch->batch_name }}</td>
-                            <td>{{ $semester->program->program_name }}</td>
-                            <td>{{ $semester->semester }}</td>
-                            <td><span class="badge badge-{{ $semester->status ? "success":"danger" }}">{{ $semester->status? "Running":"Inactive" }}</span></td>
-                            <td>
-                                <a href="" class="btn btn-primary">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
+                            <tr class="text-center">
+                                <td>1</td>
+                                <td>{{ $semester->batch->batch_name }}</td>
+                                <td>{{ $semester->program->program_name }}</td>
+                                @if ($semester->semester != null)
+                                    <td>
+                                        {{ $semester->semester }}
+                                    </td>
+                                @else
+                                    <td>{{ $semester->year }}</td>
+                                @endif
+                                <td><span
+                                        class="badge badge-{{ $semester->status ? 'success' : 'danger' }}">{{ $semester->status ? 'Running' : 'Inactive' }}</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary text-white editsemester" data-id="{{ $semester->id }}"
+                                        data-toggle="modal" data-target="#editCourseProgram">Edit</a>
+                                    <a class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td class="text-center" colspan="6">No data found</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center" colspan="6">No data found</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -493,7 +503,7 @@
             {{-- Semester year view start --}}
             {{-- Semester year view start --}}
 
-            <div class="table-responsive hideyear mt-4">
+            {{-- <div class="table-responsive hideyear mt-4">
                 <table class="table table-striped">
                     <thead>
                         <tr class="text-center">
@@ -507,25 +517,31 @@
                     </thead>
                     <tbody>
                         @forelse ($years as $year)
-                        <tr class="text-center">
-                            <td>1</td>
-                            <td>{{ $year->batch->batch_name }}</td>
-                            <td>{{ $year->program->program_name }}</td>
-                            <td>{{ $year->year }}</td>
-                            <td><span class="badge badge-{{ $year->status ? "success":"danger" }}">{{ $year->status? "Running":"Inactive" }}</span></td>
-                            <td>
-                                <a href="" class="btn btn-primary">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
+                            <tr class="text-center">
+                                <td>1</td>
+                                <td>{{ $year->batch->batch_name }}</td>
+                                <td>{{ $year->program->program_name }}</td>
+                                <td>
+                                    @if ($y)
+
+                                    @endif
+                                </td>
+                                <td><span
+                                        class="badge badge-{{ $year->status ? 'success' : 'danger' }}">{{ $year->status ? 'Running' : 'Inactive' }}</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary text-white edityear" data-id="{{ $year->id }}" data-toggle="modal"  data-target="#editCourseProgram">Edit</a>
+                                    <a class="btn btn-danger text-white">Delete</a>
+                                </td>
+                            </tr>
                         @empty
-                        <tr>
-                            <td class="text-center" colspan="6">No data found</td>
-                        </tr>
+                            <tr>
+                                <td class="text-center" colspan="6">No data found</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
 
             {{-- Semester year view start --}}
         </div>
@@ -546,51 +562,53 @@
                         </div>
                         <div class="modal-body">
                             <div class="container-fluid">
+
                                 <div class="form-group">
                                     @csrf
-                                  <label for="">Batch Name</label>
-                                  <select class="form-control" name="batch_name" id="">
-                                    @foreach ($batches as $batch)
-                                    <option value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
-                                    @endforeach
-                                  </select>
+                                    <label for="">Batch Name</label>
+                                    <select class="form-control" name="batch_name" id="batch_name_id">
+                                        @foreach ($batches as $batch)
+                                            <option value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+
                                 <div class="form-group">
-                                  <label for="">Program Name</label>
+                                    <label for="">Program Name</label>
 
-                                  <select class="form-control" name="program_name" id="">
-                                    <option selected value="">Choose....</option>
-                                      @foreach ($programs as $program)
-                                      <option class="pid" value="{{ $program->id }}">{{ $program->program_name }}</option>
-                                      @endforeach
-                                  </select>
+                                    <select class="form-control" name="program_name" id="program_name_id">
+                                        <option selected value="">Choose....</option>
+                                        @foreach ($programs as $program)
+                                            <option class="pid" value="{{ $program->id }}">
+                                                {{ $program->program_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
+
                                 <div class="form-group" id="semesterhide">
-                                  <label for="">Semester</label>
-                                  <select class="form-control" name="semester" id="">
-                                    <option selected value="">select any one</option>
-                                    <option value="1st semester">1st semester</option>
-                                    <option value="2nd semester">2nd semester</option>
-                                    <option value="3rd semester">3rd semester</option>
-                                    <option value="4th semester">4th semester</option>
-                                    <option value="5th semester">5th semester</option>
-                                    <option value="6th semester">6th semester</option>
-                                    <option value="7th semester">7th semester</option>
-                                    <option value="8th semester">8th semester</option>
-                                  </select>
+                                    <label for="">Semester</label>
+                                    <select class="form-control" name="semester" id="semester_id">
+                                        <option selected value="">select any one</option>
+                                        <option value="1st semester">1st semester</option>
+                                        <option value="2nd semester">2nd semester</option>
+                                        <option value="3rd semester">3rd semester</option>
+                                        <option value="4th semester">4th semester</option>
+                                        <option value="5th semester">5th semester</option>
+                                        <option value="6th semester">6th semester</option>
+                                        <option value="7th semester">7th semester</option>
+                                        <option value="8th semester">8th semester</option>
+                                    </select>
                                 </div>
-
-
 
                                 <div class="form-group" id="yearhide">
-                                  <label for="">Year</label>
-                                  <select class="form-control" name="year" id="">
-                                    <option selected value="">Select any one</option>
-                                    <option value="1st year">1st year</option>
-                                    <option value="2nd year">2nd year</option>
-                                    <option value="3rd year">3rd year</option>
-                                    <option value="4th year">4th year</option>
-                                  </select>
+                                    <label for="">Year</label>
+                                    <select class="form-control" name="year" id="year_id">
+                                        <option selected value="">Select any one</option>
+                                        <option value="1st year">1st year</option>
+                                        <option value="2nd year">2nd year</option>
+                                        <option value="3rd year">3rd year</option>
+                                        <option value="4th year">4th year</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -603,7 +621,77 @@
             </div>
         </div>
         {{-- Add Course/Batch Modal End --}}
+        <!-- Edit Modal start -->
+        <div class="modal fade" id="editCourseProgram" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form id="updateBatchCourse">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Current Semester</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    @csrf
+                                    <label for="">Batch Name</label>
+                                    <select class="form-control" name="batch_name" id="edit_batch_name">
+                                        @foreach ($batches as $batch)
+                                            <option value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="">Program Name</label>
+
+                                    <select class="form-control" name="program_name" id="edit_program_name">
+                                        <option selected value="">Choose....</option>
+                                        @foreach ($programs as $program)
+                                            <option class="pid" value="{{ $program->id }}">
+                                                {{ $program->program_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="editsemesterhide">
+                                    <label for="">Semester</label>
+                                    <select class="form-control" name="semester" id="edit_semester_name">
+                                        <option selected value="">select any one</option>
+                                        <option value="1st semester">1st semester</option>
+                                        <option value="2nd semester">2nd semester</option>
+                                        <option value="3rd semester">3rd semester</option>
+                                        <option value="4th semester">4th semester</option>
+                                        <option value="5th semester">5th semester</option>
+                                        <option value="6th semester">6th semester</option>
+                                        <option value="7th semester">7th semester</option>
+                                        <option value="8th semester">8th semester</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="edityearhide">
+                                    <label for="">Year</label>
+                                    <select class="form-control" name="year" id="edit_year_name">
+                                        <option selected value="">Select any one</option>
+                                        <option value="1st year">1st year</option>
+                                        <option value="2nd year">2nd year</option>
+                                        <option value="3rd year">3rd year</option>
+                                        <option value="4th year">4th year</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" id="btnsemester" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
         {{-- Course Batch End --}}
         <!-- Responsive  type tables End -->
 

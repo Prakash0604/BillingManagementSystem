@@ -46,6 +46,7 @@
                   @enderror
                 </div>
                     <button class="btn btn-primary btn-lg">Register</button>
+                    Already registered ? <a href="{{ route('login') }}">Login</a>
             </form>
           </div>
         </div>

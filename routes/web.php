@@ -26,7 +26,7 @@ Route::get('/login', [AuthController::class, 'login'])
     ->name('login');
 Route::post('/login', [AuthController::class, 'storeLogin'])
     ->name('store.login');
-Route::get('/register', [AuthController::class, 'register'])
+Route::get('/', [AuthController::class, 'register'])
     ->name('register');
 Route::post('/register', [AuthController::class, 'storeRegister'])
     ->name('storeRegister');
@@ -49,6 +49,7 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('setup/program/delete/{id}',[SetupController::class,'deleteProgram'])->name('delete_program');
     Route::get('setup/program/select/filter/{id}',[SetupController::class,'selectProgram'])->name('selectProgram');
     Route::post('setup/current/runing/semester',[SetupController::class,'runningSemester'])->name('runningSemester');
+    Route::get('setup/current/running/edit/{id}',[SetupController::class,'editSemester'])->name('editSemester');
     // Program Route End
 
 });
