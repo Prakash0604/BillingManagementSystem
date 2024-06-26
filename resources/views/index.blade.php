@@ -85,7 +85,15 @@
 						</a>
 						<ul class="submenu">
 							<li><a href="{{ route('setup') }}">Setup</a></li>
-							<li><a href="{{ route('students.index') }}">Student</a></li>
+                            <li class="dropdown">
+								<a href="javascript:;" class="dropdown-toggle">
+									<i class="bi bi-person"></i><span class="mtext">Students</span>
+								</a>
+								<ul class="submenu child">
+									<li><a href="{{ route('students.create') }}">Add Student</a></li>
+									<li><a href="{{ route('students.index') }}">Student Lists</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li class="dropdown">
