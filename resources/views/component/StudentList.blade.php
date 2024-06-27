@@ -7,7 +7,7 @@
 						<div class="row">
 							<div class="col-md-12 col-sm-12">
 								<div class="title">
-									<h4>Contact Directory</h4>
+									<h4>Student Dictionary</h4>
 								</div>
 								<nav aria-label="breadcrumb" role="navigation">
 									<ol class="breadcrumb">
@@ -40,26 +40,30 @@
 								<div class="contact-directory-box">
 									<div class="contact-dire-info text-center">
 										<div class="contact-avatar">
-											<span>
+                                            <span>
                                                 @if ($student->image!="")
 												<img src="{{ asset('storage/images/'.$student->image) }}" alt="No image">
                                                 @else
 												<img src="{{ asset('src/images/defaultimage.png') }}" alt="No image">
                                                 @endif
 											</span>
+                                            <a href="{{ route('students.edit',$student->id) }}" class="text-primary bi bi-pencil-square"></a>
+                                            <a href="" class="text-danger bi bi-trash"></a>
 										</div>
 										<div class="contact-name">
 											<h4>{{ $student->student_name }}</h4>
 											<p>{{ $student->email }}</p>
+											<p class="work text-danger">{{ $student->username }}</p>
 											<div class="work text-success"><i class="bi bi-telephone-outbound"></i> {{ $student->contact }}</div>
 										</div>
 									</div>
 									<div class="view-contact">
-										<a href="#">View Profile</a>
+										<a href="{{ route('students.show',$student->id) }}">View Profile</a>
 									</div>
 								</div>
 							</li>
                             @empty
+                            <div class="container text-center">No data found</div>
                             @endforelse
 						</ul>
 					</div>
