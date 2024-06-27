@@ -14,14 +14,17 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('image')->nullable();
+            $table->string('username');
+            $table->string('password');
             $table->string('student_name',50);
             $table->string('email')->unique()->nullable();
             $table->date('date_of_birth');
             $table->string('address');
             $table->string('contact');
             $table->enum('gender',['Male','Female','Others']);
-            $table->unsignedBigInteger('semester_id')->nullable();
-            $table->foreign('semester_id')->references('id')->on('currentbatches')->onUpdate('cascade');
+            $table->string('batch_name')->nullable();
+            $table->string('program')->nullable();
+            $table->string('type')->nullable();
             $table->string('father_name')->nullable();
             $table->string('father_contact')->nullable();
             $table->string('mother_name')->nullable();

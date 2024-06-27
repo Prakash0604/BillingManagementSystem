@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use Illuminate\Support\Str;
 use App\Models\currentbatch;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students=Student::all();
+        $students=Student::orderBy('id','DESC')->get();
         return view('component.StudentList',['students'=>$students]);
     }
 
@@ -22,7 +23,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $semesters=currentbatch::all();
+        $semesters=currentbatch::with('batch','program')->get();
         return view('component.StudentsAdd',['semesters'=>$semesters]);
     }
 
@@ -46,14 +47,19 @@ class StudentController extends Controller
             $imagepath=time().'.'.$image->getClientOriginalName();
             $image->storeAs('public/images/'.$imagepath);
         }
+        $username='STU'.Str::random(5).'2081';
         Student::create([
+            'username'=>$username,
+            'password'=>$username,
             'student_name'=>$request->student_name,
             'email'=>$request->email,
             'date_of_birth'=>$request->date_of_birth,
             'address'=>$request->address,
             'contact'=>$request->contact,
             'gender'=>$request->gender,
-            'semester_id'=>$request->semester,
+            'batch_name'=>$request->batch_name,
+            'program'=>$request->program,
+            'type'=>$request->current_type,
             'father_name'=>$request->father_name,
             'father_contact'=>$request->father_contact,
             'mother_name'=>$request->mother_name,
@@ -71,7 +77,8 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        //
+       $student= Student::find($id);
+        return view('component.StudentProfile',['student'=>$student]);
     }
 
     /**
@@ -79,7 +86,9 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $studentedit=Student::find($id);
+        $semesters=currentbatch::with('batch','program')->get();
+        return view('component.StudentsEdit',['semesters'=>$semesters,'studentedit'=>$studentedit]);
     }
 
     /**
