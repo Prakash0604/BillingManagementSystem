@@ -98,7 +98,7 @@
                             <select class="form-control" name="batch_name" id="">
                                 <option value="">Select...</option>
                                 @forelse ($semesters as $semester)
-                                <option value="{{ $semester->batch->batch_name,$studentedit->batch_name }}">{{ $semester->batch->batch_name }}</option>
+                                <option value="{{ $semester->batch->id }}">{{ $semester->batch->batch_name }}</option>
                                 @empty
                                 No data found
                                 @endforelse
@@ -113,7 +113,7 @@
                             <select class="form-control" name="program" id="">
                                 <option value="">Select...</option>
                                 @forelse ($semesters as $semester)
-                                    <option value="{{ $semester->program->program_name }}">{{ $semester->program->program_name }}</option>
+                                    <option value="{{ $semester->program->id }}">{{ $semester->program->program_name }}</option>
                                 @empty
                                     No data found
                                 @endforelse

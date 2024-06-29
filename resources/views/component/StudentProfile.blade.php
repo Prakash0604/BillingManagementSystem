@@ -19,22 +19,24 @@
         <div class="container">
             <div class=" card-box height-100-p">
                 <div class="profile-photo">
-                    <a href="{{ route('students.edit',$student->id) }}"class="edit-avatar"><i class="fa fa-pencil"></i></a>
-                    @if ($student != '')
-                        <img src="{{ asset('storage/images/' . $student->image) }}" alt="" class="avatar-photo">
+                    <a href="{{ url('students/edit/') }}"class="edit-avatar"><i class="fa fa-pencil"></i></a>
+                    @if ($student->image != '')
+                        <img src="{{ asset('storage/images/' . $student->image) }}" alt="" class="" width="150" height="100">
                     @else
                         <img src="{{ asset('src/images/defaultim    age.png') }}" alt="No images" class="avatar-photo">
                     @endif
                 </div>
-                <h5 class="text-center h5 mb-0">{{ $student->student_name }}</h5>
+                <div class="mt-4">
+                <h5 class="text-center h5 mb-0 mt-4">{{ $student->student_name }}</h5>
                 <p class="text-center text-danger font-14">{{ $student->username }}</p>
+            </div>
                 <div class="profile-info">
 
                     <table class="table table-bordered">
                         <h5 class="mb-20 h5 text-blue text-center">Academic Information</h5>
                         <tr>
                             <th>Batch</th>
-                            <td>{{ $student->batch_name }}</td>
+                            <td>{{ $student->batch }}</td>
                         </tr>
                         <tr>
                             <th>Program</th>
@@ -102,5 +104,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection

@@ -15,4 +15,7 @@ class Program extends Model
     public function semester(){
         return $this->hasMany(currentbatch::class);
     }
+    public function batch(){
+        return $this->belongsTo(batch::class);
+    }
 }

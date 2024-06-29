@@ -12,4 +12,8 @@ class Batch extends Model
     public function semester(){
         return $this->hasMany(currentbatch::class);
     }
+
+    public function program(){
+        return $this->hasMany(program::class);
+    }
 }

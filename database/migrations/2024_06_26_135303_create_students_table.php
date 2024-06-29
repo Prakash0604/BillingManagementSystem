@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\currentbatch;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -22,14 +23,16 @@ return new class extends Migration
             $table->string('address');
             $table->string('contact');
             $table->enum('gender',['Male','Female','Others']);
-            $table->string('batch_name')->nullable();
-            $table->string('program')->nullable();
-            $table->string('type')->nullable();
             $table->string('father_name')->nullable();
             $table->string('father_contact')->nullable();
             $table->string('mother_name')->nullable();
             $table->string('mother_contact')->nullable();
             $table->string('previous_college')->nullable();
+            $table->unsignedBigInteger('batchname_id')->nullable();
+            $table->foreign('batchname_id')->references('batch_id')->on('currentbatches');
+            $table->unsignedBigInteger('programname_id')->nullable();
+            $table->foreign('programname_id')->references('program_id')->on('currentbatches');
+            $table->string('year_semester')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

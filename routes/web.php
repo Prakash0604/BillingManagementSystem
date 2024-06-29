@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SetupController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +53,19 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('setup/current/running/edit/{id}',[SetupController::class,'editSemester'])->name('editSemester');
     Route::get('/setup/current/running/program/delete/{id}',[SetupController::class,'deleteSemester'])->name('deleteSemester');
     // Program Route End
-    // Route::get('/students/add',[StudentController::class,'addstudent']);
-    Route::resource('students',StudentController::class);
+
+
+    Route::get('/students',[StudentsController::class,'index'])->name('students.index');
+    Route::get('/students/create',[StudentsController::class,'createStudent'])->name('students.create');
+    Route::post('/students/create',[StudentsController::class,'store'])->name('students.store');
+    Route::get('/students/{id}',[StudentsController::class,'show'])->name('students.show');
+    Route::get('/students/edit/{id}',[StudentsController::class,'edit'])->name('students.edit');
+    Route::post('/students/edit/{id}',[StudentsController::class,'update'])->name('students.update');
+    Route::get('/students/delete/{id}',[StudentsController::class,'destroy'])->name('students.destory');
+
+
+    // Unique select option is student add Start
+    Route::get('students/getprogram/{id}',[StudentsController::class,'getprogram'])->name('getprogram');
+    Route::get('students/getsemester/{id}',[StudentsController::class,'getsemester'])->name('getsemester');
+    // Unique select option is student add End
 });

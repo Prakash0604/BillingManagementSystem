@@ -81,7 +81,7 @@
 				<ul id="accordion-menu">
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-house-1"></span><span class="mtext">Home</span>
+							<span class="bi bi-house-fill"></span><span class="mtext">Home</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="{{ route('setup') }}">Setup</a></li>
@@ -98,7 +98,7 @@
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-browser2"></span><span class="mtext">Error Pages</span>
+							<span class="bi bi-bug-fill"></span><span class="mtext">Error Pages</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="400.html">400</a></li>
@@ -110,24 +110,27 @@
 					</li>
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-list3"></span><span class="mtext">Multi Level Menu</span>
+							<span class="bi bi-receipt"></span><span class="mtext">Billing</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="javascript:;">Level 1</a></li>
-							<li><a href="javascript:;">Level 1</a></li>
-							<li><a href="javascript:;">Level 1</a></li>
 							<li class="dropdown">
 								<a href="javascript:;" class="dropdown-toggle">
-									<span class="micon fa fa-plug"></span><span class="mtext">Level 2</span>
+									<span class="bi bi-sliders"></span><span class="mtext">Setup</span>
 								</a>
 								<ul class="submenu child">
-									<li><a href="javascript:;">Level 2</a></li>
-									<li><a href="javascript:;">Level 2</a></li>
+									<li><a href="javascript:;">Particular</a></li>
+									<li><a href="javascript:;">Fee Structure</a></li>
 								</ul>
 							</li>
-							<li><a href="javascript:;">Level 1</a></li>
-							<li><a href="javascript:;">Level 1</a></li>
-							<li><a href="javascript:;">Level 1</a></li>
+                            <li class="dropdown">
+								<a href="javascript:;" class="dropdown-toggle">
+									<span class="bi bi-sliders"></span><span class="mtext">Generate</span>
+								</a>
+								<ul class="submenu child">
+									<li><a href="javascript:;">Bill</a></li>
+									<li><a href="javascript:;">Receipt</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li>
@@ -140,7 +143,7 @@
 					</li>
 					<li>
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="micon dw dw-edit-2"></span><span class="mtext">Report</span>
+							<span class="bi bi-bar-chart-line-fill"></span><span class="mtext">Report</span>
 						</a>
 						<ul class="submenu">
 							<li><a href="">Batch Wise Student Report</a></li>

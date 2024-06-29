@@ -375,7 +375,7 @@ $(document).ready(function () {
     })
 
 
-    $(".hidesemester").hide();
+    // $(".hidesemester").hide();
     $(".viewsemester").on("click",function(){
         $(".hidesemester").toggle(2000);
     });
@@ -454,6 +454,74 @@ $(document).ready(function () {
     // Delete Semester End
 
 
+    // Unique Semester choosing option Start
+    $(document).on("click","#choosebatchid",function(){
+        let id=$(this).attr('value');
+        console.log(id);
+        $.ajax({
+            method:"get",
+            url:"getprogram/"+id,
+            success:function(data){
+                console.log(data);
+                    let $select = $("#program_name_id");
+                    $select.empty(); // Clear current options
+                    $select.append('<option value="">Select...</option>'); // Add default option
+                    // let $selectsemester=$("#current_semester_id");
+                    // $selectsemester.empty();
+                    // $selectsemester.append(`<option val="">Select....</option>`);
+
+                    if (data.success && data.programdata.length > 0) {
+                        // For Program Start
+                        data.programdata.forEach(element => {
+                            $select.append(`<option id="choosedata" value="${element.program.id}">${element.program.program_name}</option><br>`);
+                        });
+                        // data.programdata.forEach(element => {
+                        //     if(element.semester!=null){
+                        //         $selectsemester.append(`<option id="choosesemester" value="${element.semester}">${element.semester}</option><br>`);
+                        //     }else{
+                        //         $selectsemester.append(`<option id="chooseyear" value="${element.year}">${element.year}</option><br>`);
+                        //     }
+                        // });
+
+                        // For Program End
+                    } else {
+                        $select.append('<option value="">No data found</option>');
+                        console.error("data not found");
+                    }
+            }
+        });
+    });
+    // Unique Semester choosing option End
+
+
+    // For Choosing Semester/year Start
+    $(document).on("click","#choosedata",function(){
+        let dataid=$(this).attr("value");
+        console.log(dataid);
+        $.ajax({
+            method:"get",
+            url:"getsemester/"+dataid,
+            success:function(data){
+                console.log(data);
+                let $selectsemester=$("#current_semester_id");
+                $selectsemester.empty();
+                $selectsemester.append(`<option val="">Select....</option>`);
+                if(data.success && data.semesterdata.length>0){
+                    data.semesterdata.forEach(element => {
+                        if(element.semester!=null){
+                            $selectsemester.append(`<option  value="${element.semester}">${element.semester}</option><br>`);
+                        }else{
+                            $selectsemester.append(`<option value="${element.year}">${element.year}</option><br>`);
+                        }
+                    });
+                }else {
+                $selectsemester.append('<option value="">No data found</option>');
+                console.error("data not found");
+            }
+            }
+        });
+    });
+    // For Choosing Semester/year End
 });
 
 

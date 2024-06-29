@@ -86,8 +86,8 @@
                             <label for="">Batch</label>
                             <select class="form-control" name="batch_name" id="">
                                 <option value="">Select...</option>
-                                @forelse ($semesters as $semester)
-                                <option value="{{ $semester->batch->batch_name }}">{{ $semester->batch->batch_name }}</option>
+                                @forelse ($batchdata as $batch)
+                                <option id="choosebatchid" value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
                                 @empty
                                 No data found
                                 @endforelse
@@ -99,13 +99,8 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="">Program</label>
-                            <select class="form-control" name="program" id="">
-                                <option value="">Select...</option>
-                                @forelse ($semesters as $semester)
-                                    <option value="{{ $semester->program->program_name }}">{{ $semester->program->program_name }}</option>
-                                @empty
-                                    No data found
-                                @endforelse
+                            <select class="form-control" name="program" id="program_name_id">
+                                    {{-- <option id="program_batch_id" value=""></option> --}}
                             </select>
                         </div>
                     </div>
@@ -114,18 +109,9 @@
                     {{-- Semester start  --}}
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="">Program</label>
-                            <select class="form-control" name="current_type" id="">
-                                <option value="">Select...</option>
-                                @forelse ($semesters as $semester)
-                                @if ($semester->semester!="")
-                                <option value="{{ $semester->semester }}">{{ $semester->semester }}</option>
-                                @else
-                                <option value="{{ $semester->year }}">{{ $semester->year }}</option>
-                                @endif
-                                @empty
-                                No data found
-                                @endforelse
+                            <label for="">Semester</label>
+                            <select class="form-control" name="current_type" id="current_semester_id">
+
                             </select>
                         </div>
                     </div>
@@ -187,3 +173,5 @@
 
         <!-- Form grid End -->
     @endsection
+
+
