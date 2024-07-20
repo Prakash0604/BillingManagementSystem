@@ -171,12 +171,13 @@ class StudentsController extends Controller
     }
 
     public function destroy($id){
-        $student=Student::find($id);
-        if($student!=""){
-            $student->delete();
-            return redirect()->route('students.index')->with(['message'=>'Student has been deleted']);
-        }else{
-            return view('ErrorPage.404');
+        try{
+
+            $student=Student::find($id);
+             $student->delete();
+            return response()->json(['success'=>true,$student]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'message'=>$e->getMessage()]);
         }
     }
 

@@ -202,24 +202,4 @@ $(document).ready(function(){
                 })
             })
         })
-
-        // Fetch Student Data Start
-        $(document).ready(function(){
-
-            $("#fetchStudentdata").submit(function(event){
-                event.preventDefault();
-                $("#btnloading").text("Filtering...");
-                $("#btnloading").prop("disabled",true);
-                $.ajax({
-                    url:"batchwise/report/get",
-                    method:"get",
-                    success:function(data){
-                        if(data.success==true){
-                        }
-
-                    }
-                })
-            })
-        })
-        // Fetch Student Data End
 });

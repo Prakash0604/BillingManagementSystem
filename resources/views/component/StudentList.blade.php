@@ -18,6 +18,7 @@
             </div>
         </div>
 
+
         <div class="container">
             <a href="{{ route('students.create') }}" class="btn btn-primary btn-lg mb-4">Add Student</a>
         </div>
@@ -48,7 +49,7 @@
                                     </span>
                                     <a href="{{ url('students/edit/'.$student->id) }}"
                                         class="text-primary bi bi-pencil-square"></a>
-                                    <a class="text-danger bi bi-trash" data-toggle="modal"
+                                    <a class="text-danger bi bi-trash idforstudentdelete" data-id="{{ $student->id }}" data-toggle="modal"
                                         data-target="#modelId"></a>
                                 </div>
                                 <div class="contact-name">
@@ -68,7 +69,7 @@
                     <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
-                                <form action="{{ route('students.destory',$student->id) }}" method="get">
+                                <form id="StudentDelete">
                                     @csrf
                                     <div class="modal-header bg-secondary">
                                         <h5 class="modal-title">Delete Student</h5>
@@ -83,7 +84,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                                        <button type="submit" class="btn btn-danger" id="stuDelete">Confirm Delete</button>
                                     </div>
                                 </form>
                             </div>
@@ -99,6 +100,41 @@
     </div>
 
     {{-- Student Detail Page End --}}
+
+    <script>
+        $(document).ready(function(){
+            $(".idforstudentdelete").on("click",function(){
+                let id=$(this).attr("data-id");
+                console.log(id);
+                $("#StudentDelete").submit(function(event){
+                    event.preventDefault();
+                    $("#stuDelete").text("Deleting...");
+                    $("#stuDelete").prop("disabled",true);
+                    $.ajax({
+                        url:"students/delete/"+id,
+                        method:"get",
+                        success:function(data){
+                            console.log(data);
+                            if(data.success==true){
+                                Swal.fire({
+                                    icon:"success",
+                                    title:"Student deleted successfully",
+                                    showConfirmButton:false,
+                                    timer:1500
+                                });
+                                $("#stuDelete").prop("disabled",false);
+                                $("#stuDelete").text("Confirm Delete");
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
+                            }
+                        }
+                    })
+                })
+            })
+
+        })
+    </script>
 @endsection
 
 
