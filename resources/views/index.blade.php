@@ -6,9 +6,9 @@
 	<title>Billing Management System</title>
 
 	<!-- Site favicon -->
-	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendors/images/apple-touch-icon.png') }}">
-	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('vendors/images/favicon-32x32.png') }}">
-	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('vendors/images/favicon-32x32.png') }}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendors/images/billinglogo.jpg') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('vendors/images/billinglogo.jpg') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('vendors/images/billinglogo.jpg') }}">
 
 	<!-- Mobile Specific Metas -->
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -24,6 +24,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{{ asset('jqueryfunction/setup.js') }}"></script>
+    <script src="{{ asset('jqueryfunction/billing.js') }}"></script>
+    {{-- Data Table CDN --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap.min.js" integrity="sha512-F0E+jKGaUC90odiinxkfeS3zm9uUT1/lpusNtgXboaMdA3QFMUez0pBmAeXGXtGxoGZg3bLmrkSkbK1quua4/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 <body>
@@ -68,9 +73,9 @@
 
 	<div class="left-side-bar">
 		<div class="brand-logo">
-			<a href="index.html">
-				<img src="{{ asset('vendors/images/deskapp-logo.svg') }}" alt="" class="dark-logo">
-				<img src="{{ asset('vendors/images/deskapp-logo-white.svg') }}" alt="" class="light-logo">
+			<a href="{{ route('dashboard') }}">
+				<img src="{{ asset('vendors/images/logobilling.png') }}" alt="" class="dark-logo">
+				<img src="{{ asset('vendors/images/logobilling.png') }}" alt="" class="light-logo">
 			</a>
 			<div class="close-sidebar" data-toggle="left-sidebar-close">
 				<i class="ion-close-round"></i>
@@ -118,7 +123,7 @@
 									<span class="bi bi-sliders"></span><span class="mtext">Setup</span>
 								</a>
 								<ul class="submenu child">
-									<li><a href="javascript:;">Particular</a></li>
+									<li><a href="{{ route('particular') }}">Particular</a></li>
 									<li><a href="javascript:;">Fee Structure</a></li>
 								</ul>
 							</li>
@@ -143,11 +148,11 @@
 					</li>
 					<li>
 						<a href="javascript:;" class="dropdown-toggle">
-							<span class="bi bi-bar-chart-line-fill"></span><span class="mtext">Report</span>
+							<span class="bi bi-bar-chart-line-fill  "></span><span class="mtext">Report</span>
 						</a>
 						<ul class="submenu">
-							<li><a href="">Batch Wise Student Report</a></li>
-							<li><a href="third-party-plugins.html">Third Party Plugins</a></li>
+							<li><a href="{{ route('batchWiseReport') }}">Batch Wise Student Report</a></li>
+							<li><a href="">Third Party Plugins</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -160,7 +165,7 @@
         @yield('content')
 	</div>
     <div class="footer">
-        <div class="footer-wrap pd-20 card-box">
+        <div class="footer-wrap pd-20 card-box" style="margin-top:500px">
             Billing Management System | All right reserved by <a href="" target="_blank">Jay Prakash Chaudhary</a>
         </div>
 
@@ -168,13 +173,9 @@
 	<!-- js -->
     <script src="{{ asset('vendors/scripts/core.js') }}"></script>
 	<script src="{{ asset('vendors/scripts/script.min.js') }}"></script>
-	<script src="{{ asset('vendors/scripts/process.js') }}"></script>
-	<script src="{{ asset('vendors/scripts/layout-settings.js') }}"></script>
-	<script src="{{ asset('src/plugins/jQuery-Knob-master/jquery.knob.min.js') }}"></script>
-	{{-- <script src="{{ asset('src/plugins/highcharts-6.0.7/code/highcharts.js') }}"></script>
-	<script src="{{ asset('src/plugins/highcharts-6.0.7/code/highcharts-more.js') }}"></script>
-	<script src="{{ asset('src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js') }}"></script>
-	<script src="{{ asset('src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script> --}}
-	<script src="{{ asset('vendors/scripts/dashboard2.js') }}"></script>
+    {{-- <script>
+        let table = new DataTable('#myTable');
+    </script> --}}
+    @stack('scripts')
 </body>
 </html>

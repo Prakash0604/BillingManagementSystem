@@ -15,18 +15,6 @@
                             </ol>
                         </nav>
                     </div>
-                    <div class="col-md-6 col-sm-12 text-right">
-                        <div class="dropdown">
-                            <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                January 2018
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#">Export List</a>
-                                <a class="dropdown-item" href="#">Policies</a>
-                                <a class="dropdown-item" href="#">View Assets</a>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -42,7 +30,7 @@
                 <button class="btn btn-primary mb-4 align-middle" data-toggle="modal" data-target="#addBatch">Add
                     Batch</button>
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="batchdata">
                         <thead>
                             <tr class="text-center">
                                 <th scope="col">S.N</th>

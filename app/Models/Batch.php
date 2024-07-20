@@ -16,4 +16,8 @@ class Batch extends Model
     public function program(){
         return $this->hasMany(program::class);
     }
+
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
 }

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
     public function index(){
-        return view('component.dashboard');
+        $totalstudent=Student::all()->count();
+        $data=compact('totalstudent');
+        return view('component.dashboard',$data);
     }
 }

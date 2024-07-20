@@ -18,4 +18,8 @@ class Program extends Model
     public function batch(){
         return $this->belongsTo(batch::class);
     }
+
+    public function student(){
+        return $this->hasMany(Student::class);
+    }
 }

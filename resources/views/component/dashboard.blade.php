@@ -90,9 +90,9 @@
                     <div class="browser-visits">
                         <ul>
                             <li class="d-flex flex-wrap align-items-center">
-                                <div class="icon"><img src="vendors/images/chrome.png" alt=""></div>
-                                <div class="browser-name">Google Chrome</div>
-                                <div class="visit"><span class="badge badge-pill badge-primary">50%</span></div>
+                                <div class="bi bi-person"></div>
+                                <div class="browser-name">Total Student</div>
+                                <div class="visit"><span class="badge  badge-primary">{{ $totalstudent }}</span></div>
                             </li>
                             <li class="d-flex flex-wrap align-items-center">
                                 <div class="icon"><img src="vendors/images/firefox.png" alt=""></div>
@@ -138,10 +138,6 @@
                     <div id="chart" class="chart"></div>
                 </div>
             </div>
-        </div>
-        <div class="footer-wrap pd-20 mb-20 card-box">
-            DeskApp - Bootstrap 4 Admin Template By <a href="https://github.com/dropways" target="_blank">Ankit
-                Hingarajiya</a>
         </div>
     </div>
 @endsection

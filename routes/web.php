@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SetupController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\particularcontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,4 +70,21 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('students/getprogram/{id}',[StudentsController::class,'getprogram'])->name('getprogram');
     Route::get('students/getsemester/{id}',[StudentsController::class,'getsemester'])->name('getsemester');
     // Unique select option is student add End
+
+
+    // Fee particualr Start
+    Route::get('billing/particular',[particularcontroller::class,'particular'])->name('particular');
+    Route::post('billing/particular',[particularcontroller::class,'storeparticular'])->name('store.particular');
+    Route::get('/billing/particular/data/{id}',[particularcontroller::class,'particulardata']);
+    Route::post('/billing/particular/update',[particularcontroller::class,'updateParticular']);
+    Route::get('/billing/particular/delete/{id}',[particularcontroller::class,'deleteParticular']);
+    // Route::get('convert/kgtogram/{data}',[particularcontroller::class,'kgtogram']);
+    // Fee particualr End
+
+    // Route::get('report/batchwise',[ReportController::class,'batchwiseReport'])->name('batchWiseReport');
+    Route::get('report/batchwise',[ReportController::class,'show'])->name('batchWiseReport');
+    Route::get('report/batch/data/{id}',[ReportController::class,'dataBatchwise'])->name('dataBatchwise');
+    Route::get('report/semester/data/{id}',[ReportController::class,'dataSemesterwise'])->name('dataSemesterwise');
+    Route::get('report/batchwise/report/get',[ReportController::class,'reportBatchwise'])->name('reportBatchwise');
+    Route::get('/test',[ReportController::class,'test']);
 });

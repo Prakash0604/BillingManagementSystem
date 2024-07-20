@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
+use App\Models\Program;
 use App\Models\Student;
 use Illuminate\Support\Str;
 use App\Models\currentbatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class StudentsController extends Controller
 {
@@ -103,11 +105,69 @@ class StudentsController extends Controller
 
     }
 
+
+    public function update(Request $request,$id){
+        $request->validate([
+
+            'student_name_edit'=>'required|string|min:3',
+            'address_edit'=>'required|string',
+            'date_of_birth_edit'=>'required|date',
+            'contact_edit'=>'required|integer|min:8',
+            'gender_edit'=>'required',
+            'image_edit'=>'mimes:jpg,png,jpeg',
+            'email_edit'=>'email',
+
+        ]);
+
+        $studentdata= Student::with('batch','program')->find($id);
+        $currentimage=$studentdata->image;
+        if($request->hasFile('image_edit')){
+
+            $image=$request->file('image_edit');
+            $currentimage=time().'.'.$image->getClientOriginalName();
+            $image->storeAs('public/images/'.$currentimage);
+
+            if($currentimage && Storage::exists("public/images/".$currentimage)){
+                Storage::delete('public/images/'.$currentimage);
+            }
+
+        }
+        $studentdata->update([
+
+            'student_name'=>$request->student_name_edit,
+            'email'=>$request->email_edit,
+            'date_of_birth'=>$request->date_of_birth_edit,
+            'address'=>$request->address_edit,
+            'contact'=>$request->contact_edit,
+            'gender'=>$request->gender_edit,
+            'father_name'=>$request->father_name_edit,
+            'father_contact'=>$request->father_contact_edit,
+            'mother_name'=>$request->mother_name_edit,
+            'mother_contact'=>$request->mother_contact_edit,
+            'previous_college'=>$request->previous_college_edit,
+            'image'=>$currentimage,
+        ]);
+        return redirect()->route('students.index')->with(['message'=>'Student has been Updated successfully']);
+
+    }
+
     public function show($id){
-        $student=Student::find($id)->with('semesters','program','batch')->get();
-        // return view('component.StudentProfile',['student'=>$student]);
-        return response()->json(['student'=>$student]);
+
+            $student=Student::with('batch','program')->find($id);
+            if($student!=null){
+                return view('component.StudentProfile')->with('student',$student);
+                // return response()->json(['student'=>$student]);
+            }else{
+                return view('ErrorPage.404');
+            }
         // $student->toArrary();
+    }
+
+    public function edit($id){
+        $student=Student::with('batch','program')->find($id);
+        $batches=Batch::all();
+        $programs=Program::all();
+        return view('component.StudentsEdit',['studentedit'=>$student,'batches'=>$batches,'programs'=>$programs]);
     }
 
     public function destroy($id){

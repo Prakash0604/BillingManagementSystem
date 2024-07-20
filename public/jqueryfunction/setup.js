@@ -465,11 +465,7 @@ $(document).ready(function () {
                 console.log(data);
                     let $select = $("#program_name_id");
                     $select.empty(); // Clear current options
-                    $select.append('<option value="">Select...</option>'); // Add default option
-                    // let $selectsemester=$("#current_semester_id");
-                    // $selectsemester.empty();
-                    // $selectsemester.append(`<option val="">Select....</option>`);
-
+                    $select.append('<option value="N/A">Select...</option>'); // Add default option
                     if (data.success && data.programdata.length > 0) {
                         // For Program Start
                         data.programdata.forEach(element => {
@@ -505,7 +501,7 @@ $(document).ready(function () {
                 console.log(data);
                 let $selectsemester=$("#current_semester_id");
                 $selectsemester.empty();
-                $selectsemester.append(`<option val="">Select....</option>`);
+                $selectsemester.append(`<option value="N/A">Select....</option>`);
                 if(data.success && data.semesterdata.length>0){
                     data.semesterdata.forEach(element => {
                         if(element.semester!=null){

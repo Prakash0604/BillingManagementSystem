@@ -29,9 +29,9 @@ return new class extends Migration
             $table->string('mother_contact')->nullable();
             $table->string('previous_college')->nullable();
             $table->unsignedBigInteger('batchname_id')->nullable();
-            $table->foreign('batchname_id')->references('batch_id')->on('currentbatches');
+            $table->foreign('batchname_id')->references('id')->on('batches');
             $table->unsignedBigInteger('programname_id')->nullable();
-            $table->foreign('programname_id')->references('program_id')->on('currentbatches');
+            $table->foreign('programname_id')->references('id')->on('programs');
             $table->string('year_semester')->nullable();
             $table->boolean('status')->default(1);
             $table->timestamps();

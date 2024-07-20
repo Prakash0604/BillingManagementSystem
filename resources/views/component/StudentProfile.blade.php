@@ -19,11 +19,11 @@
         <div class="container">
             <div class=" card-box height-100-p">
                 <div class="profile-photo">
-                    <a href="{{ url('students/edit/') }}"class="edit-avatar"><i class="fa fa-pencil"></i></a>
+                    <a href="{{ route('students.edit',$student->id) }}"class="edit-avatar"><i class="fa fa-pencil"></i></a>
                     @if ($student->image != '')
                         <img src="{{ asset('storage/images/' . $student->image) }}" alt="" class="" width="150" height="100">
                     @else
-                        <img src="{{ asset('src/images/defaultim    age.png') }}" alt="No images" class="avatar-photo">
+                        <img src="{{ asset('src/images/defaultimage.png') }}" alt="No images" class="avatar-photo">
                     @endif
                 </div>
                 <div class="mt-4">
@@ -36,21 +36,21 @@
                         <h5 class="mb-20 h5 text-blue text-center">Academic Information</h5>
                         <tr>
                             <th>Batch</th>
-                            <td>{{ $student->batch }}</td>
+                            <td>{{ $student->batch->batch_name ?? 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th>Program</th>
-                            <td>{{ $student->program }}</td>
+                            <td>{{ $student->program->program_name ?? 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th>Semester</th>
-                            <td>{{ $student->type }}</td>
+                            <td>{{ $student->year_semester }}</td>
                         </tr>
                     </table>
                     <table class="table table-bordered">
                         <h5 class="mb-20 h5 text-blue text-center">Personal Information</h5>
                         <tr>
-                            <th>Gender</th>
+                            <th >Gender</th>
                             <td>{{ $student->gender }}</td>
                         </tr>
                         <tr>
