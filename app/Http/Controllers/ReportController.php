@@ -17,25 +17,15 @@ class ReportController extends Controller
             $batch=$request->input('batch_name');
             $program=$request->input('program_name');
             $semester=$request->input('semester');
-        // if($request!=null){
-        //     $students=Student::where('batchname_id','likes','%'.$batch.'%')->orwhere('programname_id','likes','%'.$program.'%')->orwhere('year_semester','likes','%'.$semester.'%')->get();
-        // }else{
-        //     $students=Student::where('status',1)->get();
-        // }
         $query = Student::with('currentbatch','batch','program');
 
-        if (!is_null($batch)) {
+        if ($batch) {
             $query->where('batchname_id', 'like', '%'.$batch.'%');
         }
-
-        if (!is_null($program)) {
+        if($program){
             $query->orWhere('programname_id', 'like', '%'.$program.'%');
-        }
 
-        if (!is_null($semester)) {
-            $query->orWhere('year_semester', 'like', '%'.$semester.'%');
         }
-
         $students = $query->get();
 
         if ($students->isEmpty()) {

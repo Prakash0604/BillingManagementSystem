@@ -128,7 +128,7 @@
             <div class="modal-content">
                 <form id="deleteParticular">
                     <div class="modal-header bg-secondary">
-                            <h5 class="modal-title">Particular Edit</h5>
+                            <h5 class="modal-title">Particular Delete</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -152,5 +152,5 @@
     </div>
 
     {{-- Delete Particular End --}}
-   
+
 @endsection

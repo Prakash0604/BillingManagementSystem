@@ -89,7 +89,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="dropdown">
+					{{-- <li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="bi bi-bug-fill"></span><span class="mtext">Error Pages</span>
 						</a>
@@ -100,7 +100,7 @@
 							<li><a href="500.html">500</a></li>
 							<li><a href="503.html">503</a></li>
 						</ul>
-					</li>
+					</li> --}}
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="bi bi-receipt"></span><span class="mtext">Billing</span>

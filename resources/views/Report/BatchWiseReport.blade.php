@@ -9,14 +9,15 @@
                         <select class="form-control" name="batch_name" id="test1">
                             <option value="">Select ..</option>
                             @foreach ($academicyear as $year)
-                                <option class="id_batch" value="{{ old('batch_name', $year->id) }}">{{ $year->batch_name }}
+                                    <option class="id_batch" value="{{ $year->id }}" {{ request()->get('batch_name') == $year->id ? 'selected' : '' }}>
+                                        {{ $year->batch_name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group col-4">
                         <label for="">Program</label>
-                        <select class="form-control program_id" name="program_name" id="program_id">
+                        <select class="form-control program_id" name="program_name" id="program_id" {{ request()->get('program_name') ? 'selected' : '' }} >
                         </select>
                     </div>
                     <div class="form-group col-4">
@@ -69,21 +70,20 @@
                     @forelse ($students as $student)
                         <tr>
                             <td>{{ $n }}</td>
-                            @if ($student->batchname_id!=null)
-                            <td class="batch_hide">{{ $student->batch->batch_name }}</td>
+                            @if ($student->batchname_id != null)
+                                <td class="batch_hide">{{ $student->batch->batch_name }}</td>
                             @else
-                            <td class="batch_hide">N/A</td>
+                                <td class="batch_hide">N/A</td>
                             @endif
-                            @if ($student->programname_id!=null)
-                            <td class="program_hide">{{ $student->program->program_name }}</td>
+                            @if ($student->programname_id != null)
+                                <td class="program_hide">{{ $student->program->program_name }}</td>
                             @else
-                            <td class="program_hide">N/A</td>
+                                <td class="program_hide">N/A</td>
                             @endif
-                            @if ($student->year_semester!=null)
-                            <td class="semester_hide">{{ $student->year_semester }}</td>
+                            @if ($student->year_semester != null)
+                                <td class="semester_hide">{{ $student->year_semester }}</td>
                             @else
-                            <td class="semester_hide">N/A</td>
-
+                                <td class="semester_hide">N/A</td>
                             @endif
                             <td class="student_hide">{{ $student->student_name }}</td>
                             <td class="email_hide">{{ $student->email }}</td>
@@ -114,7 +114,5 @@
                 $(".semester_hide").toggle();
             });
         });
-
-
     </script>
 @endsection

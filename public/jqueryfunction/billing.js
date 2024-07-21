@@ -139,6 +139,9 @@ $(document).ready(function(){
 
     // Batch wise Filter Report Start
     $(document).ready(function() {
+        // Get the selected program name from the request
+        var selectedProgram = "{{ request()->get('program_name') }}";
+
         $("#test1").on("change", function() {
             var id = $(this).val();
             console.log(id);
@@ -150,21 +153,20 @@ $(document).ready(function(){
 
                     // Clear previous options
                     let $selectProgram = $("#program_id");
-
                     $selectProgram.empty();
 
                     // Add default option
-                    $selectProgram.append(`<option value="N/A">Select....</option>`);
+                    $selectProgram.append(`<option value="">Select....</option>`);
 
                     // Populate program options
                     if (data.success && data.message.length > 0) {
                         data.message.forEach(element => {
                             if (element.program && element.program.program_name) {
-                                $selectProgram.append(`<option value="${element.program.id}">${element.program.program_name}</option>`);
+                                let selected = selectedProgram == element.program.id ? 'selected' : '';
+                                $selectProgram.append(`<option value="${element.program.id}" ${selected}>${element.program.program_name}</option>`);
                             }
                         });
-                    }
-                  else {
+                    } else {
                         $selectProgram.append('<option value="">No data found</option>');
                         console.error("data not found");
                     }
@@ -174,7 +176,11 @@ $(document).ready(function(){
                 }
             });
         });
+
+        // Trigger change event to load the program options when the page loads
+        $("#test1").trigger("change");
     });
+
         // Batch wise Filter Report End
         $(document).ready(function(){
             $("#program_id").on("change",function(){

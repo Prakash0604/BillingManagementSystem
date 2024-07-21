@@ -11,7 +11,7 @@ class particularcontroller extends Controller
     protected $particularService;
     public function particular(){
         $particular=feeparticualr::all();
-        return view('component.particular',['particulars'=>$particular]);
+        return view('Billing.particular',['particulars'=>$particular]);
     }
 
     public function storeparticular(Request $request){
