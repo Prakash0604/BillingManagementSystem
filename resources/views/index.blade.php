@@ -85,6 +85,7 @@
 								<ul class="submenu child">
 									<li><a href="{{ route('students.create') }}">Add Student</a></li>
 									<li><a href="{{ route('students.index') }}">Student Lists</a></li>
+									<li><a href="{{ route('students.index') }}">Import/Export Students</a></li>
 								</ul>
 							</li>
 						</ul>

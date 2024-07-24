@@ -20,7 +20,7 @@ class StudentsController extends Controller
 
         $students=Student::orderBy('id','DESC')->get();
 
-        return view('component.StudentList',['students'=>$students]);
+        return view('Student.StudentList',['students'=>$students]);
 
     }
 
@@ -39,7 +39,7 @@ class StudentsController extends Controller
         $batchdata=Batch::with('semester')->get();
 
 
-        return view('component.StudentsAdd',['batchdata'=>$batchdata]);
+        return view('Student.StudentsAdd',['batchdata'=>$batchdata]);
 
     }
 
@@ -168,7 +168,7 @@ class StudentsController extends Controller
         $student=Student::with('batch','program')->find($id);
         $batches=Batch::all();
         $programs=Program::all();
-        return view('component.StudentsEdit',['studentedit'=>$student,'batches'=>$batches,'programs'=>$programs]);
+        return view('Student.StudentsEdit',['studentedit'=>$student,'batches'=>$batches,'programs'=>$programs]);
     }
 
     public function destroy($id){

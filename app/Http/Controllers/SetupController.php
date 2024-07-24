@@ -20,7 +20,7 @@ class SetupController extends Controller
         // $semesters=currentbatch::where('semesters')->with('batch','program')->get();
         // $years=currentbatch::select('year','batch_id','program_id','status')->with('batch','program')->get();
         $data = compact('batches', 'types','programs','semesters');
-        return view('component.setup', $data);
+        return view('Report.setup', $data);
     }
 
     // Add Batch Function Start
