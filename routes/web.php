@@ -79,6 +79,17 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('students/edit/getsemester/{id}',[StudentsController::class,'getsemester']);
     // Unique select option is student EditEnd
 
+    // Student Import And Export Format
+
+    Route::get('students/view/exportwithimport',[StudentsController::class,'getImportExport'])->name('getImportExport');
+    Route::get('students/view/export',[StudentsController::class,'export'])->name('student.export');
+    Route::post('students/view/import',[StudentsController::class,'import'])->name('student.import');
+
+    Route::get('students/view/getprogram/{id}',[StudentsController::class,'getprogram'])->name('export.getprogram');
+    Route::get('students/view/getsemester/{id}',[StudentsController::class,'getsemester'])->name('export.getsemester');
+
+    // Student Import And Export Format
+
 
     // Fee particualr Start
     Route::get('billing/particular',[particularcontroller::class,'particular'])->name('particular');

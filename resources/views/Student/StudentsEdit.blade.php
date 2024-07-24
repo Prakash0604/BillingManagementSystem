@@ -126,7 +126,7 @@
                     {{-- Semester start  --}}
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
-                            <label for="">Program</label>
+                            <label for="">Semester/Year</label>
                             <select class="form-control" name="current_type_edit" id="current_type_edit_id">
                                 <option value="">Select...</option>
                                 @if ($studentedit->year_semester!="")

@@ -553,9 +553,9 @@ $(document).ready(function () {
                 if(data.success && data.semesterdata.length>0){
                     data.semesterdata.forEach(element => {
                         if(element.semester!=null){
-                            $selectsemester.append(`<option  value="${element.semester}">${element.semester}</option><br>`);
+                            $selectsemester.append(`<option  selected value="${element.semester}">${element.semester}</option><br>`);
                         }else{
-                            $selectsemester.append(`<option value="${element.year}">${element.year}</option><br>`);
+                            $selectsemester.append(`<option selected value="${element.year}">${element.year}</option><br>`);
                         }
                     });
                 }else {
@@ -567,6 +567,64 @@ $(document).ready(function () {
     });
 
     // For Student Edit Option Unique Choosing option for semester Batch and Programs End
+
+
+    // Student Excel Export Data
+
+        // For Student Edit Option Unique Choosing option for semester Batch and Programs Start
+        $(document).on("click","#excelExportbatch",function(){
+            let id=$(this).attr('value');
+            console.log(id);
+            $.ajax({
+                method:"get",
+                url:"getprogram/"+id,
+                success:function(data){
+                    console.log(data);
+                        let $select = $("#excelExportProgram");
+                        $select.empty(); // Clear current options
+                        if (data.success && data.programdata.length > 0) {
+                            // For Program Start
+                            data.programdata.forEach(element => {
+                                $select.append(`<option id="selectProgramExport" selected value="${element.program.id}">${element.program.program_name}</option><br>`);
+                            });
+                            // For Program End
+                        } else {
+                            $select.append('<option value="">No data found</option>');
+                            console.error("data not found");
+                        }
+                }
+            });
+        });
+
+        $(document).on("click","#selectProgramExport",function(){
+            let dataid=$(this).attr("value");
+            console.log(dataid);
+            $.ajax({
+                method:"get",
+                url:"getsemester/"+dataid,
+                success:function(data){
+                    console.log(data);
+                    let $selectsemester=$("#excelExportSemesters");
+                    $selectsemester.empty();
+                    if(data.success && data.semesterdata.length>0){
+                        data.semesterdata.forEach(element => {
+                            if(element.semester!=null){
+                                $selectsemester.append(`<option  selected value="${element.semester}">${element.semester}</option><br>`);
+                            }else{
+                                $selectsemester.append(`<option selected value="${element.year}">${element.year}</option><br>`);
+                            }
+                        });
+                    }else {
+                    $selectsemester.append('<option value="">No data found</option>');
+                    console.error("data not found");
+                }
+                }
+            });
+        });
+
+        // For Student Edit Option Unique Choosing option for semester Batch and Programs End
+
+    // Student Excel Export Data
 });
 
 

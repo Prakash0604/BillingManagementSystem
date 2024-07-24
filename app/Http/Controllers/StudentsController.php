@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\StudentExport;
+use App\Imports\StudentImport;
 use App\Models\Batch;
 use App\Models\Program;
 use App\Models\Student;
@@ -10,7 +12,8 @@ use App\Models\currentbatch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\DB;
 class StudentsController extends Controller
 {
 
@@ -139,7 +142,7 @@ class StudentsController extends Controller
             'contact'=>$request->contact_edit,
             'email'=>$request->email_edit,
             'batchname_id'=>$request->batch_name_edit,
-            'programname_id'=>$request->program_edit,
+            'programname_id'=>$request->programname_edit,
             'year_semester'=>$request->current_type_edit,
             'father_name'=>$request->father_name_edit,
             'father_contact'=>$request->father_contact_edit,
@@ -156,7 +159,7 @@ class StudentsController extends Controller
 
             $student=Student::with('batch','program')->find($id);
             if($student!=null){
-                return view('component.StudentProfile')->with('student',$student);
+                return view('Student.StudentProfile')->with('student',$student);
                 // return response()->json(['student'=>$student]);
             }else{
                 return view('ErrorPage.404');
@@ -195,4 +198,33 @@ class StudentsController extends Controller
             return response()->json(['success'=>true,'semesterdata'=>$semesterdata]);
         }
         // Unique Semester Selection in Student End
+
+        public function getImportExport(){
+            $batchdata=Batch::where('status',1)->get();
+            return view('Student.ImportExport',compact('batchdata'));
+        }
+
+        public function export(){
+            return Excel::download(new StudentExport,'StudentExportFormat.xls');
+        }
+
+        public function import(Request $request){
+            $request->validate([
+                'batch_name'=>'required',
+                'program_name'=>'required',
+                'year_semester'=>'required',
+                'file'=>'mimes:xls,xlsx'
+            ]);
+            $username='STU'.Str::random(5).'2081';
+            Excel::import(new StudentImport,$request->file('file'));
+            DB::table('students')->insert([
+                'username'=>$username,
+              'password'=>Hash::make($username),
+                'batchname_id'=>$request['batch_name'],
+                'programname_id'=>$request['program_name'],
+                'year_semester'=>$request['year_semester'],
+            ]);
+            return redirect()->back()->with('success','All Student has been updated');
+        }
+
 }

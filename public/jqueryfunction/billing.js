@@ -197,10 +197,10 @@ $(document).ready(function(){
                             data.data.forEach(element => {
                                 if(element.program && element.semester!=null){
                                     $selectSemester.empty();
-                                    $selectSemester.append(`<option value="${element.id}">${element.semester}</option>`);
+                                    $selectSemester.append(`<option selected value="${element.id}">${element.semester}</option>`);
                                 }else{
                                     $selectSemester.empty();
-                                    $selectSemester.append(`<option value="${element.id}">${element.year}</option>`);
+                                    $selectSemester.append(`<option selected value="${element.id}">${element.year}</option>`);
                                 }
                             });
                         }
