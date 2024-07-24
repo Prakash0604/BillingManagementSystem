@@ -34,6 +34,9 @@ Route::get('/', [AuthController::class, 'register'])
 Route::post('/register', [AuthController::class, 'storeRegister'])
     ->name('storeRegister');
 
+    Route::get('/test',function(){
+        return "Hello world";
+    });
 // Authentication Route End
 
 Route::middleware('AdminAuth')->group(function () {
@@ -70,6 +73,11 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('students/getprogram/{id}',[StudentsController::class,'getprogram'])->name('getprogram');
     Route::get('students/getsemester/{id}',[StudentsController::class,'getsemester'])->name('getsemester');
     // Unique select option is student add End
+
+    // Unique select option in student Edit Start
+    Route::get('students/edit/getprogram/{id}',[StudentsController::class,'getprogram']);
+    Route::get('students/edit/getsemester/{id}',[StudentsController::class,'getsemester']);
+    // Unique select option is student EditEnd
 
 
     // Fee particualr Start

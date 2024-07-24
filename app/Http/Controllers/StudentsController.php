@@ -122,24 +122,25 @@ class StudentsController extends Controller
         $studentdata= Student::with('batch','program')->find($id);
         $currentimage=$studentdata->image;
         if($request->hasFile('image_edit')){
-
-            $image=$request->file('image_edit');
-            $currentimage=time().'.'.$image->getClientOriginalName();
-            $image->storeAs('public/images/'.$currentimage);
-
             if($currentimage && Storage::exists("public/images/".$currentimage)){
                 Storage::delete('public/images/'.$currentimage);
             }
+            $image=$request->file('image_edit');
+            $currentimage=time().'.'.$image->getClientOriginalName();
+            $image->storeAs('public/images/'.$currentimage);
 
         }
         $studentdata->update([
 
             'student_name'=>$request->student_name_edit,
-            'email'=>$request->email_edit,
             'date_of_birth'=>$request->date_of_birth_edit,
+            'gender'=>$request->gender_edit,
             'address'=>$request->address_edit,
             'contact'=>$request->contact_edit,
-            'gender'=>$request->gender_edit,
+            'email'=>$request->email_edit,
+            'batchname_id'=>$request->batch_name_edit,
+            'programname_id'=>$request->program_edit,
+            'year_semester'=>$request->current_type_edit,
             'father_name'=>$request->father_name_edit,
             'father_contact'=>$request->father_contact_edit,
             'mother_name'=>$request->mother_name_edit,

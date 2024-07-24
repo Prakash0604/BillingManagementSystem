@@ -471,14 +471,6 @@ $(document).ready(function () {
                         data.programdata.forEach(element => {
                             $select.append(`<option id="choosedata" value="${element.program.id}">${element.program.program_name}</option><br>`);
                         });
-                        // data.programdata.forEach(element => {
-                        //     if(element.semester!=null){
-                        //         $selectsemester.append(`<option id="choosesemester" value="${element.semester}">${element.semester}</option><br>`);
-                        //     }else{
-                        //         $selectsemester.append(`<option id="chooseyear" value="${element.year}">${element.year}</option><br>`);
-                        //     }
-                        // });
-
                         // For Program End
                     } else {
                         $select.append('<option value="">No data found</option>');
@@ -518,6 +510,63 @@ $(document).ready(function () {
         });
     });
     // For Choosing Semester/year End
+
+
+
+    // For Student Edit Option Unique Choosing option for semester Batch and Programs Start
+    $(document).on("click","#uniquebatch_id",function(){
+        let id=$(this).attr('value');
+        console.log(id);
+        $.ajax({
+            method:"get",
+            url:"getprogram/"+id,
+            success:function(data){
+                console.log(data);
+                    let $select = $("#program_edit_id");
+                    $select.empty(); // Clear current options
+                    $select.append('<option value="N/A">Select...</option>'); // Add default option
+                    if (data.success && data.programdata.length > 0) {
+                        // For Program Start
+                        data.programdata.forEach(element => {
+                            $select.append(`<option id="program_edit_unique_id" value="${element.program.id}">${element.program.program_name}</option><br>`);
+                        });
+                        // For Program End
+                    } else {
+                        $select.append('<option value="">No data found</option>');
+                        console.error("data not found");
+                    }
+            }
+        });
+    });
+
+    $(document).on("click","#program_edit_unique_id",function(){
+        let dataid=$(this).attr("value");
+        console.log(dataid);
+        $.ajax({
+            method:"get",
+            url:"getsemester/"+dataid,
+            success:function(data){
+                console.log(data);
+                let $selectsemester=$("#current_type_edit_id");
+                $selectsemester.empty();
+                $selectsemester.append(`<option value="N/A">Select....</option>`);
+                if(data.success && data.semesterdata.length>0){
+                    data.semesterdata.forEach(element => {
+                        if(element.semester!=null){
+                            $selectsemester.append(`<option  value="${element.semester}">${element.semester}</option><br>`);
+                        }else{
+                            $selectsemester.append(`<option value="${element.year}">${element.year}</option><br>`);
+                        }
+                    });
+                }else {
+                $selectsemester.append('<option value="">No data found</option>');
+                console.error("data not found");
+            }
+            }
+        });
+    });
+
+    // For Student Edit Option Unique Choosing option for semester Batch and Programs End
 });
 
 

@@ -95,13 +95,13 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="">Batch</label>
-                            <select class="form-control" name="batch_name_edit" id="">
+                            <select class="form-control" name="batch_name_edit" id="batch_name_edit_id">
                                 <option value="">Select...</option>
-                                @if ($studentedit->batch->id!="N/A")
-                                <option class="form-control" readonly  selected value="{{ $studentedit->batch->id }}">{{ $studentedit->batch->batch_name }}</option>
+                                @if ($studentedit->batchname_id!="")
+                                <option class="form-control" id="uniquebatch_id" readonly  selected value="{{ $studentedit->batch->id }}">{{ $studentedit->batch->batch_name }}</option>
                                 @else
                                 @foreach ($batches as $batch)
-                                <option value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
+                                <option id="uniquebatch_id" value="{{ $batch->id }}">{{ $batch->batch_name }}</option>
                                 @endforeach
                                 @endif
                             </select>
@@ -112,16 +112,11 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="">Program</label>
-                            <select class="form-control" name="program_edit" id="">
+                            <select class="form-control" name="programname_edit" id="program_edit_id">
                                 <option value="">Select...</option>
-                                @if ($studentedit->program->program_name)
+                                @if ($studentedit->programname_id!="")
                                     <option selected value="{{ $studentedit->program->id }}">{{ $studentedit->program->program_name }}</option>
                                  @else
-                                @forelse ($programs as $program)
-                                <option value="{{ $program->id }}">{{ $program->program_name }}</option>
-                                @empty
-                                No data found
-                                @endforelse
                                 @endif
                             </select>
                         </div>
@@ -132,12 +127,12 @@
                     <div class="col-md-4 col-sm-12">
                         <div class="form-group">
                             <label for="">Program</label>
-                            <select class="form-control" name="current_type_edit" id="">
+                            <select class="form-control" name="current_type_edit" id="current_type_edit_id">
                                 <option value="">Select...</option>
-                                @if ($studentedit->year_semester!="N/A")
+                                @if ($studentedit->year_semester!="")
                                 <option selected value="{{ $studentedit->year_semester }}">{{ $studentedit->year_semester }}</option>
                                 @else
-                                <option selected value="N/A">{{ $studentedit->year_semester }}</option>
+
                                 @endif
                             </select>
                         </div>
