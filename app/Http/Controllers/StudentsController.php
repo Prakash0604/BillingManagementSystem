@@ -215,15 +215,12 @@ class StudentsController extends Controller
                 'year_semester'=>'required',
                 'file'=>'mimes:xls,xlsx'
             ]);
+            $batch_name=$request->input('batch_name');
+            $program_name=$request->input('program_name');
+            $year_semester=$request->input('year_semester');
             $username='STU'.Str::random(5).'2081';
-            Excel::import(new StudentImport,$request->file('file'));
-            DB::table('students')->insert([
-                'username'=>$username,
-              'password'=>Hash::make($username),
-                'batchname_id'=>$request['batch_name'],
-                'programname_id'=>$request['program_name'],
-                'year_semester'=>$request['year_semester'],
-            ]);
+            $password=$username;
+            Excel::import(new StudentImport($batch_name,$program_name,$year_semester,$username,$password),$request->file('file'));
             return redirect()->back()->with('success','All Student has been updated');
         }
 
