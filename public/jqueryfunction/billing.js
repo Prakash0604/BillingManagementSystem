@@ -43,7 +43,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#editButton").click(function(){
+    $(".editButton").click(function(){
         let id=$(this).attr("data-id");
         console.log(id);
         $.ajax({
@@ -97,7 +97,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#deleteButton").on("click",function(){
+    $(".deleteButton").on("click",function(){
         var id=$(this).attr('data-id');
         console.log(id);
         $("#deleteParticular").submit(function(event){

@@ -62,8 +62,8 @@
                     <td>{{ $particular->description }}</td>
                     <td><span class="badge badge-{{ $particular->status ? "success":"danger" }}">{{ $particular->status ? "Active":"Inactive" }}</span></td>
                     <td>
-                        <a data-toggle="modal" data-target="#editModal" data-id="{{ $particular->id }}" id="editButton" class="btn btn-primary text-white"><i class="bi bi-pencil-square"></i> Edit</a>
-                        <a data-toggle="modal" data-target="#deleteModal" data-id="{{ $particular->id }}" id="deleteButton"  class="btn btn-danger text-white"><i class="bi bi-trash"></i> Delete</a>
+                        <a data-toggle="modal" data-target="#editModal" data-id="{{ $particular->id }}" id="editButton" class="btn btn-primary text-white editButton"><i class="bi bi-pencil-square"></i> Edit</a>
+                        <a data-toggle="modal" data-target="#deleteModal" data-id="{{ $particular->id }}" id="deleteButton"  class="btn btn-danger text-white deleteButton"><i class="bi bi-trash"></i> Delete</a>
                     </td>
                 </tr>
                 @php
@@ -152,5 +152,7 @@
     </div>
 
     {{-- Delete Particular End --}}
+
+
 
 @endsection
