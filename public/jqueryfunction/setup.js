@@ -621,10 +621,10 @@ $(document).ready(function () {
                 }
             });
         });
-
         // For Student Edit Option Unique Choosing option for semester Batch and Programs End
-
     // Student Excel Export Data
+
+
 });
 
 

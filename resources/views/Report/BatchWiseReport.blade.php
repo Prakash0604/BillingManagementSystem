@@ -1,7 +1,7 @@
 @extends('index')
 @section('content')
-    <div class="container  bg-white mb-4 p-3">
-        <div class="card p-2">
+    <div class="container  mb-4 p-3">
+        <div class="card p-2 bg-secondary text-white">
             <form method="get">
                 <div class="row">
                     <div class="form-group col-2">

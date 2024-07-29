@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BatchTypeController;
+use App\Http\Controllers\FeeStructure;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
@@ -98,6 +100,19 @@ Route::middleware('AdminAuth')->group(function () {
     Route::post('/billing/particular/update',[particularcontroller::class,'updateParticular']);
     Route::get('/billing/particular/delete/{id}',[particularcontroller::class,'deleteParticular']);
     // Route::get('convert/kgtogram/{data}',[particularcontroller::class,'kgtogram']);
+
+
+    // BatchType Start
+    Route::get('/billing/batchtype',[BatchTypeController::class,'index'])->name('batch_type');
+    Route::get('/billing/batchtype/create',[BatchTypeController::class,'create']);
+    Route::post('billing/batchtype/store',[BatchTypeController::class,'store']);
+    Route::post('/billing/batchtype/update',[BatchTypeController::class,'update']);
+    Route::get('/billing/batchtype/delete/{id}',[BatchTypeController::class,'delete']);
+
+    // Fetch Data
+    Route::get('billing/data/get/{id}',[BatchTypeController::class,'data']);
+    // BatchType End
+
     // Fee particualr End
 
     // Route::get('report/batchwise',[ReportController::class,'batchwiseReport'])->name('batchWiseReport');
@@ -106,4 +121,11 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('report/semester/data/{id}',[ReportController::class,'dataSemesterwise'])->name('dataSemesterwise');
     Route::get('report/batchwise/report/get',[ReportController::class,'reportBatchwise'])->name('reportBatchwise');
     Route::get('/test',[ReportController::class,'test']);
+
+
+    // Fee Structure
+    Route::get('billing/fee_structure',[FeeStructure::class,'index']);
+    Route::get('billing/fee_structure/create',[FeeStructure::class,'create'])->name('billing.fee_structure.create');
+    Route::post('billing/fee_structure/create',[FeeStructure::class,'store'])->name('billing.fee_structure_store');
+
 });

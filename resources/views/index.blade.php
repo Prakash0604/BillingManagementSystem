@@ -14,24 +14,33 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 	<!-- Google Font -->
+    {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> --}}
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap.min.js" integrity="sha512-F0E+jKGaUC90odiinxkfeS3zm9uUT1/lpusNtgXboaMdA3QFMUez0pBmAeXGXtGxoGZg3bLmrkSkbK1quua4/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    {{-- Latest DataTable CDN Start --}}
+    <!-- DataTables -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css">
+    {{-- Latest DataTable CDN End --}}
+
+
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/core.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/icon-font.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}">
+	{{-- <link rel="stylesheet" type="text/css" href="{{ asset('src/plugins/jvectormap/jquery-jvectormap-2.0.3.css') }}"> --}}
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/styles/style.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="{{ asset('jqueryfunction/setup.js') }}"></script>
     <script src="{{ asset('jqueryfunction/billing.js') }}"></script>
     {{-- Data Table CDN --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/dataTables.bootstrap4.min.css" integrity="sha512-PT0RvABaDhDQugEbpNMwgYBCnGCiTZMh9yOzUsJHDgl/dMhD9yjHAwoumnUk3JydV3QTcIkNDuN40CJxik5+WQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/dataTables.bootstrap.min.js" integrity="sha512-F0E+jKGaUC90odiinxkfeS3zm9uUT1/lpusNtgXboaMdA3QFMUez0pBmAeXGXtGxoGZg3bLmrkSkbK1quua4/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
-<body>
+<body class="bg-white">
 	<div class="header">
 		<div class="header-left">
 			<div class="menu-icon dw dw-menu"></div>
@@ -77,6 +86,7 @@
 							<span class="bi bi-house-fill"></span><span class="mtext">Home</span>
 						</a>
 						<ul class="submenu">
+							<li><a href="{{ route('batch_type') }}">Batch Type</a></li>
 							<li><a href="{{ route('setup') }}">Setup</a></li>
                             <li class="dropdown">
 								<a href="javascript:;" class="dropdown-toggle">
@@ -90,18 +100,6 @@
 							</li>
 						</ul>
 					</li>
-					{{-- <li class="dropdown">
-						<a href="javascript:;" class="dropdown-toggle">
-							<span class="bi bi-bug-fill"></span><span class="mtext">Error Pages</span>
-						</a>
-						<ul class="submenu">
-							<li><a href="400.html">400</a></li>
-							<li><a href="403.html">403</a></li>
-							<li><a href="404.html">404</a></li>
-							<li><a href="500.html">500</a></li>
-							<li><a href="503.html">503</a></li>
-						</ul>
-					</li> --}}
 					<li class="dropdown">
 						<a href="javascript:;" class="dropdown-toggle">
 							<span class="bi bi-receipt"></span><span class="mtext">Billing</span>

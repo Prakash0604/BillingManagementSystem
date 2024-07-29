@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container bg-white p-2">
         <table class="table table-bordered" id="myTable">
             <thead class="thead-dark">
                 <tr>

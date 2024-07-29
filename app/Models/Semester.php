@@ -11,4 +11,8 @@ class Semester extends Model
     public function program(){
         $this->hasMany(Program::class);
     }
+
+    public function batch_type(){
+       return  $this->hasMany(type_semester_year::class);
+    }
 }
