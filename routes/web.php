@@ -4,11 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BatchTypeController;
+use App\Http\Controllers\courseFeeController;
 use App\Http\Controllers\FeeStructure;
+use App\Http\Controllers\FeeStructureController;
 use App\Http\Controllers\SetupController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\particularcontroller;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +112,7 @@ Route::middleware('AdminAuth')->group(function () {
     Route::post('/billing/batchtype/update',[BatchTypeController::class,'update']);
     Route::get('/billing/batchtype/delete/{id}',[BatchTypeController::class,'delete']);
 
+    Route::get('/test',[TestController::class,'test']);
     // Fetch Data
     Route::get('billing/data/get/{id}',[BatchTypeController::class,'data']);
     // BatchType End
@@ -120,12 +124,15 @@ Route::middleware('AdminAuth')->group(function () {
     Route::get('report/batch/data/{id}',[ReportController::class,'dataBatchwise'])->name('dataBatchwise');
     Route::get('report/semester/data/{id}',[ReportController::class,'dataSemesterwise'])->name('dataSemesterwise');
     Route::get('report/batchwise/report/get',[ReportController::class,'reportBatchwise'])->name('reportBatchwise');
-    Route::get('/test',[ReportController::class,'test']);
+    // Route::get('/test',[ReportController::class,'test']);
 
 
     // Fee Structure
-    Route::get('billing/fee_structure',[FeeStructure::class,'index']);
-    Route::get('billing/fee_structure/create',[FeeStructure::class,'create'])->name('billing.fee_structure.create');
-    Route::post('billing/fee_structure/create',[FeeStructure::class,'store'])->name('billing.fee_structure_store');
+    Route::get('billing/fee_structure',[FeeStructureController::class,'index_courseFee']);
+    Route::get('billing/fee_structure/create',[FeeStructureController::class,'create_courseFee']);
+
+    // Fetch Data in fee structure
+    Route::get('billing/fee_structure/program/data/get/{id}',[FeeStructureController::class,'fetchProgramData']);
+    Route::get('billing/fee_structure/semester/data/get/{id}',[FeeStructureController::class,'fetchSemesterData']);
 
 });
