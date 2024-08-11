@@ -17,6 +17,10 @@ class Batch extends Model
         return $this->hasMany(program::class);
     }
 
+    public function feestructure(){
+        return $this->belongsTo(Feestructure::class);
+    }
+
     public function student(){
         return $this->hasMany(Student::class);
     }

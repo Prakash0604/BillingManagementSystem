@@ -19,4 +19,8 @@ class currentbatch extends Model
     public function students(){
         return $this->hasMany(Student::class);
     }
+
+    public function fee_structure(){
+        return $this->belongsTo(FeeStructure::class);
+    }
 }

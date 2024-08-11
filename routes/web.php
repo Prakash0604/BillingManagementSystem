@@ -130,6 +130,9 @@ Route::middleware('AdminAuth')->group(function () {
     // Fee Structure
     Route::get('billing/fee_structure',[FeeStructureController::class,'index_courseFee']);
     Route::get('billing/fee_structure/create',[FeeStructureController::class,'create_courseFee']);
+    Route::post('billing/fee_structure/store',[FeeStructureController::class,'store_courseFee']);
+    Route::get('billing/delete/coursefee/{id}',[FeeStructureController::class,'delete_coursefee']);
+
 
     // Fetch Data in fee structure
     Route::get('billing/fee_structure/program/data/get/{id}',[FeeStructureController::class,'fetchProgramData']);

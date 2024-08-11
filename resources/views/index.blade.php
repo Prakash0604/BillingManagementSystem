@@ -111,7 +111,7 @@
 								</a>
 								<ul class="submenu child">
 									<li><a href="{{ route('particular') }}">Particular</a></li>
-									<li><a href="{{ url('billing/fee_structure/create') }}">Fee Structure</a></li>
+									<li><a href="{{ url('billing/fee_structure') }}">Fee Structure</a></li>
 								</ul>
 							</li>
                             <li class="dropdown">
