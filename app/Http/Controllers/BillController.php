@@ -38,12 +38,23 @@ class BillController extends Controller
     public function fetchStudentData($id){
         try{
 
-            $batches=currentbatch::where('id',$id)->pluck('year','semester');
-                $students=Student::where('year_semester',$batches)->get();
-                dd($students);
+            $batches=currentbatch::where('id',$id)->get();
+            // if($batches)
+                // $students=Student::where('year_semester',$batches)->get();
+                // dd($students);
+            return response()->json(['success'=>true,'message'=>$batches]);
+        }catch(\Exception $e){
+            return response()->json(['success'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+    public function fetchStudenttypedata($type){
+        try{
+            $students=Student::where('year_semester',$type)->get();
             return response()->json(['success'=>true,'message'=>$students]);
         }catch(\Exception $e){
             return response()->json(['success'=>false,'message'=>$e->getMessage()]);
+
         }
     }
 }

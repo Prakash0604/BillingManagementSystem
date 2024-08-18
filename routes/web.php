@@ -143,8 +143,9 @@ Route::middleware('AdminAuth')->group(function () {
 
 
     Route::get('billing/fee/program/data/{id}',[BillController::class,'fetchProgramData'])->name('fetch_program_data');
-    Route::get('billing/fee/semester/data/{id}',[BillController::class,'fetchSemesterData'])->name('fetch_semester_data');;
-    Route::get('billing/fee/students/data/{id}',[BillController::class,'fetchStudentData'])->name('fetch_student_data');;
+    Route::get('billing/fee/semester/data/{id}',[BillController::class,'fetchSemesterData'])->name('fetch_semester_data');
+    Route::get('billing/fee/students/data/{id}',[BillController::class,'fetchStudentData'])->name('fetch_student_data');
+    Route::get('billing/fee/type/{type}',[BillController::class,'fetchStudenttypedata']);
 
     Route::get('billing/fee/receipt',[BillController::class,'index']);
 

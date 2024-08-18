@@ -44,100 +44,126 @@
         </div>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            // Get the selected program name from the request
-            var selectedProgram = "{{ request()->get('program_name') }}";
+   <script>
+    $(document).ready(function() {
+    // Get the selected program name from the request
+    var selectedProgram = "{{ request()->get('program_name') }}";
 
-            $("#filter_batch").on("change", function() {
-                var id = $(this).val();
-                console.log(id);
-                $.ajax({
-                    url: "/billing/fee/program/data/" + id,
-                    method: "get",
-                    success: function(data) {
-                        console.log(data);
+    // Function to handle the batch filter change
+    function handleBatchChange() {
+        var id = $("#filter_batch").val();
+        console.log(id);
 
-                        // Clear previous options
-                        let $selectProgram = $("#program_id");
-                        $selectProgram.empty();
+        $.ajax({
+            url: "/billing/fee/program/data/" + id,
+            method: "GET",
+            success: function(data) {
+                console.log(data);
 
-                        // Add default option
-                        $selectProgram.append(`<option value="">Select....</option>`);
+                let $selectProgram = $("#program_id");
+                $selectProgram.empty(); // Clear existing options
 
-                        // Populate program options
-                        if (data.success && data.message.length > 0) {
-                            data.message.forEach(element => {
-                                if (element.program && element.program.program_name) {
-                                    let selected = selectedProgram == element.program
-                                        .id ? 'selected' : '';
-                                    $selectProgram.append(
-                                        `<option value="${element.id}" ${selected}>${element.program.program_name}</option>`
-                                    );
-                                }
-                            });
-                        } else {
-                            $selectProgram.append('<option value="">No data found</option>');
-                            console.error("data not found");
+                // Add 'Select...' option before appending dynamic data
+                $selectProgram.append('<option value="">Select....</option>');
+
+                if (data.success && Array.isArray(data.message) && data.message.length > 0) {
+                    data.message.forEach(element => {
+                        if (element.program && element.program.program_name) {
+                            $selectProgram.append( `<option value="${element.id}" ${selected}>${element.program.program_name}</option>`
+                            );
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("AJAX error: " + status + " - " + error);
-                    }
-                });
-            });
-
-            // Trigger change event to load the program options when the page loads
-            $("#filter_batch").trigger("change");
-            $("#program_id").trigger("change");
-            $("#semester_id").trigger("change");
-
-            $(document).ready(function() {
-                $("#program_id").on("change", function() {
-                    let id = $(this).val();
-                    console.log(id);
-                    $.ajax({
-                        url: "/billing/fee/semester/data/" + id,
-                        method: "get",
-                        success: function(data) {
-                            console.log(data);
-                            let $selectSemester = $("#semester_id");
-                            // Add default option
-                            $selectSemester.append(`<option value="">Select....</option>`);
-                            if (data.success && data.message.length > 0) {
-                                data.message.forEach(element => {
-                                    if (element.message && element.semester!= null || element.year!=null) {
-                                        $selectSemester.empty();
-                                        $selectSemester.append(`<option  value="">Select....</option><option class="semester"   value="${element.id}">${element.semester}</option>`);
-                                    } else {
-                                        $selectSemester.empty();
-                                        $selectSemester.append(
-                                            `<option  value="">Select....</option><option class="year" value="${element.id}">${element.year}</option>`
-                                        );
-                                    }
-                                });
-                            }
-                        }
-                    })
-                })
-            })
+                    });
+                } else {
+                    $selectProgram.append('<option value="">No data found</option>');
+                    console.error("Data not found");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + status + " - " + error);
+            }
         });
+    }
 
-        $(document).ready(function() {
-            $("#semester_id").on("change", function() {
-                let id = $(this).val();
-                console.log(id);
-                $.ajax({
-                    url: "/billing/fee/students/data/" + id,
-                    method: "get",
-                    success: function(data) {
-                        console.log(data);
+    // Function to handle the program filter change
+    function handleProgramChange() {
+        let id = $("#program_id").val();
+        console.log(id);
 
-                        // Clear previous options
+        $.ajax({
+            url: "/billing/fee/semester/data/" + id,
+            method: "GET",
+            success: function(data) {
+                console.log(data);
+                let $selectSemester = $("#semester_id");
+                $selectSemester.empty(); // Clear existing options
 
-                    }
-                });
-            })
-        })
-    </script>
+                // Add 'Select...' option first
+                $selectSemester.append('<option selected value="">Select....</option>');
+
+                if (data.success && Array.isArray(data.message) && data.message.length > 0) {
+                    data.message.forEach(element => {
+                        if (element.semester != null) {
+                            $selectSemester.append(`<option value="${element.id}">${element.semester}</option>`);
+                        } else if (element.year != null) {
+                            $selectSemester.append(`<option value="${element.id}">${element.year}</option>`);
+                        }
+                    });
+                } else {
+                    $selectSemester.append('<option value="N/A">No data found</option>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + status + " - " + error);
+            }
+        });
+    }
+
+    // Function to handle the semester filter change
+    function handleSemesterChange() {
+        let id = $("#semester_id").val();
+        console.log(id);
+
+        $.ajax({
+            url: "/billing/fee/students/data/" + id,
+            method: "GET",
+            success: function(data) {
+                console.log(data);
+                if(data.success && data.message.length > 0){
+                    data.message.forEach(element => {
+                        if(element.semester!=null){
+                            $.ajax({
+                                url:"/billing/fee/type/"+element.semester,
+                                method:"get",
+                                success:function(semester_stu){
+                                    console.log(semester_stu);
+                                }
+                            })
+                        }else if(element.year!=null){
+                            $ajax({
+                                url:"/billing/fee/type/"+element.year,
+                                method:"get",
+                                success:function(year_stu){
+                                    console.log(year_stu);
+                                }
+                            })
+                        }
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX error: " + status + " - " + error);
+            }
+        });
+    }
+
+    // Attach event handlers
+    $("#filter_batch").on("change", handleBatchChange);
+    $("#program_id").on("change", handleProgramChange);
+    $("#semester_id").on("change", handleSemesterChange);
+
+    // Trigger the change events to initialize data on page load
+    handleBatchChange();
+});
+
+   </script>
 @endsection
