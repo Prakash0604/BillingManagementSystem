@@ -37,6 +37,8 @@ class ReportController extends Controller
         return view('Report.BatchWiseReport',compact('academicyear','programs','students'));
     }
 
+    
+
     public function dataBatchwise($id){
         try{
             $data=currentbatch::with('program')->where('batch_id',$id)->get();

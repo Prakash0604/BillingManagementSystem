@@ -36,7 +36,7 @@ class FeeStructureController extends Controller
     public function fetchProgramData($id){
         try{
             $data=currentbatch::with('program')->where('batch_id',$id)->get();
-            return response()->json(['success'=>true,'batch_data'=>$data]);
+            return response()->json(['success'=>true,'message'=>$data]);
         }catch(\Exception $e){
             return response()->json(['success'=>false,'message'=>$e->getMessage()]);
         }
@@ -45,7 +45,7 @@ class FeeStructureController extends Controller
     public function fetchSemesterData($id){
         try{
             $semester=currentbatch::where('program_id',$id)->get();
-            return response()->json(['success'=>true,'semester'=>$semester]);
+            return response()->json(['success'=>true,'message'=>$semester]);
         }catch(\Exception $e){
             return response()->json(['success'=>false,'message'=>$e->getMessage()]);
         }
@@ -53,50 +53,30 @@ class FeeStructureController extends Controller
 
     public function store_courseFee(Request $request){
         try{
-            $validator =Validator::make($request->all(), [
-
-            'batch_name' => 'required',
-            'program_name' => 'required',
-            'currentbatch_id' => 'required',
-            'particulars' => 'required|array',
-            'particulars.*' => 'required', // Assuming you have a particulars table
-            'times' => 'required|array',
-            'times.*' => 'required|numeric',
-            'amounts' => 'required|array',
-            'amounts.*' => 'required|numeric',
-            'totalamounts' => 'required|array',
-            'totalamounts.*' => 'required|numeric',
-            'netAmounts' => 'required|numeric',
-            'grossAmounts' => 'required|numeric',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()], 422);
-            }
+          $request->validate([
+            'batch_name'=>'required',
+            'program_name'=>'required',
+            'currentbatch_id'=>'required',
+            'inputs.*.particular_name'=>'required',
+            'inputs.*.times'=>'required',
+            'inputs.*.amounts'=>'required',
+          ]);
             $currentBatch=$request->input('currentbatch_id');
-            $particulars=$request->input('particulars');
-            $times=$request->input('times');
-            $amount=$request->input('amounts');
-            $totalamounts=$request->input('totalamounts');
-            $netamounts=$request->input('netAmounts');
-            $grossamounts=$request->input('grossAmounts');
+            $netamounts=$request->input('netAmount');
+            $grossamounts=$request->input('grossAmount');
             // dd($request->all());
-            foreach($particulars as $index=>$particular){
-                if(isset($times[$index]) && isset($amount[$index]) && isset($totalamounts[$index])){
+            foreach($request->inputs as $key=>$value){
                     $data=[
                         'current_batch_id'=>$currentBatch,
-                        'particular_id'=>$particular,
-                        'times'=>$times[$index],
-                        'amounts'=>$amount[$index],
-                        'total_amounts'=>$totalamounts[$index],
+                        'particular_id'=>$value['particular_name'],
+                        'times'=>$value['times'],
+                        'amounts'=>$value['amounts'],
+                        'total_amounts'=>$value['total_amounts'],
                         'net_amounts'=>$netamounts,
                         'gross_amounts'=>$grossamounts,
                     ];
                     FeeStructure::create($data);
                     return response()->json(['success'=>true,'message'=>'saved']);
-                }else{
-                    return response()->json(['success'=>false,'message'=> 'Array Mismatches']);
-                }
             }
 
         }catch(\Exception $e){

@@ -208,10 +208,4 @@ $(document).ready(function(){
                 })
             })
         })
-
-
-        // Fee Structure Select Program and Semester list
-
-
-        // Fee Structure Select Program and Semester list
 });
