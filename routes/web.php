@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BatchTypeController;
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\courseFeeController;
 use App\Http\Controllers\FeeStructure;
 use App\Http\Controllers\FeeStructureController;
@@ -137,5 +138,14 @@ Route::middleware('AdminAuth')->group(function () {
     // Fetch Data in fee structure
     Route::get('billing/fee_structure/program/data/get/{id}',[FeeStructureController::class,'fetchProgramData']);
     Route::get('billing/fee_structure/semester/data/get/{id}',[FeeStructureController::class,'fetchSemesterData']);
+    Route::get('billing/fee/students/data/get/{id}',[BillController::class,'fetchStudentData']);
+
+
+
+    Route::get('billing/fee/program/data/{id}',[BillController::class,'fetchProgramData'])->name('fetch_program_data');
+    Route::get('billing/fee/semester/data/{id}',[BillController::class,'fetchSemesterData'])->name('fetch_semester_data');;
+    Route::get('billing/fee/students/data/{id}',[BillController::class,'fetchStudentData'])->name('fetch_student_data');;
+
+    Route::get('billing/fee/receipt',[BillController::class,'index']);
 
 });
